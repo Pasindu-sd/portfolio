@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pasindu Sandeepa | Cybersecurity Researcher & Ethical Hacker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04090f;--bg2:#081220;--bg3:#0c1a2e;--bg4:#101f35;
+  --border:#152a44;--border2:#1e3d60;--border3:#2a5580;
+  --cyan:#00d4ff;--cyan2:#0099bb;--cyan3:rgba(0,212,255,.12);
+  --green:#00ff88;--green2:rgba(0,255,136,.12);
+  --orange:#ff8c00;--red:#ff3b60;--purple:#a855f7;
+  --yellow:#ffd700;
+  --t1:#e8f4ff;--t2:#8bb8d8;--t3:#4a7a9b;--t4:#2a4a60;
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Inter',sans-serif;
+  --display:'Syne',sans-serif;
+  --r4:4px;--r8:8px;--r12:12px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:15px;line-height:1.7;overflow-x:hidden}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--border2)}
+a{color:inherit;text-decoration:none}
+
+/* NOISE */
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5}
+
+/* ═══════ NAV ═══════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 6vw;background:rgba(4,9,15,.9);border-bottom:1px solid var(--border);backdrop-filter:blur(16px)}
+.nav-id{font-family:var(--mono);font-size:12px;color:var(--cyan);display:flex;align-items:center;gap:6px}
+.nav-id .blink{animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:11px;color:var(--t3);letter-spacing:1px;transition:color .2s}
+.nav-links a:hover{color:var(--cyan)}
+.nav-hire{font-family:var(--mono);font-size:11px;padding:7px 18px;border:1px solid var(--cyan);color:var(--cyan);letter-spacing:1.5px;transition:all .2s}
+.nav-hire:hover{background:var(--cyan);color:#000}
+
+/* ═══════ HERO ═══════ */
+#hero{min-height:100vh;display:grid;grid-template-columns:1.1fr 0.9fr;gap:5rem;align-items:center;padding:80px 6vw 4rem;position:relative;overflow:hidden}
+.hero-grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:48px 48px;opacity:.35;mask-image:radial-gradient(ellipse 90% 80% at 20% 50%,#000 30%,transparent 80%)}
+.hero-glow1{position:absolute;left:-15%;top:10%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.06) 0%,transparent 70%);pointer-events:none}
+.hero-glow2{position:absolute;right:5%;top:40%;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,.05) 0%,transparent 70%);pointer-events:none}
+
+.hero-l{position:relative;z-index:2}
+.hero-eyebrow{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:4px;display:flex;align-items:center;gap:10px;margin-bottom:1.5rem}
+.hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--cyan)}
+
+h1.hero-name{font-family:var(--display);font-size:clamp(3.2rem,6.5vw,6rem);font-weight:800;line-height:.92;letter-spacing:-1px;color:var(--t1)}
+h1.hero-name .accent{color:var(--cyan);display:block}
+
+.hero-tagline{font-family:var(--mono);font-size:clamp(.8rem,1.2vw,.95rem);color:var(--t3);margin-top:1.25rem;min-height:1.4em}
+.cur{color:var(--cyan);animation:blink 1s steps(1) infinite}
+
+.hero-desc{font-size:.95rem;color:var(--t2);max-width:460px;margin-top:1.25rem;line-height:1.85}
+
+/* Platform badges row */
+.platform-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:1.75rem}
+.plat-badge{display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--border2);border-radius:var(--r4);font-family:var(--mono);font-size:11px;background:var(--bg2);transition:all .2s}
+.plat-badge:hover{border-color:var(--cyan);transform:translateY(-2px)}
+.plat-badge .plat-name{color:var(--t3);letter-spacing:1px}
+.plat-badge .plat-val{color:var(--cyan);font-weight:500;margin-left:4px}
+.plat-badge .plat-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dot-green{background:var(--green);box-shadow:0 0 6px var(--green)}
+.dot-cyan{background:var(--cyan);box-shadow:0 0 6px var(--cyan)}
+.dot-orange{background:var(--orange)}
+.dot-purple{background:var(--purple)}
+
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem}
+.cta-p{font-family:var(--mono);font-size:12px;letter-spacing:2px;padding:13px 28px;background:var(--cyan);color:#000;font-weight:500;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));transition:all .2s}
+.cta-p:hover{background:#fff}
+.cta-s{font-family:var(--mono);font-size:12px;letter-spacing:2px;padding:13px 28px;border:1px solid var(--border2);color:var(--t2);transition:all .2s}
+.cta-s:hover{border-color:var(--cyan);color:var(--cyan)}
+
+/* HERO RIGHT – Stats cards */
+.hero-r{position:relative;z-index:2;display:flex;flex-direction:column;gap:1rem}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r8);padding:1.25rem 1.5rem;position:relative;overflow:hidden;transition:border-color .25s,transform .25s}
+.stat-card:hover{border-color:var(--border2);transform:translateX(-4px)}
+.stat-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px}
+.sc-cyan::before{background:linear-gradient(180deg,var(--cyan),transparent)}
+.sc-green::before{background:linear-gradient(180deg,var(--green),transparent)}
+.sc-orange::before{background:linear-gradient(180deg,var(--orange),transparent)}
+.sc-purple::before{background:linear-gradient(180deg,var(--purple),transparent)}
+.stat-card-label{font-family:var(--mono);font-size:10px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem}
+.stat-card-main{display:flex;align-items:baseline;gap:.75rem;flex-wrap:wrap}
+.stat-num{font-family:var(--display);font-size:2.2rem;font-weight:800;line-height:1}
+.sc-cyan .stat-num{color:var(--cyan)}
+.sc-green .stat-num{color:var(--green)}
+.sc-orange .stat-num{color:var(--orange)}
+.sc-purple .stat-num{color:var(--purple)}
+.stat-detail{font-family:var(--mono);font-size:11px;color:var(--t3)}
+.stat-sub{font-size:.82rem;color:var(--t3);margin-top:.3rem}
+
+/* ═══════ SECTION COMMON ═══════ */
+.section{padding:5rem 6vw;max-width:1300px;margin:0 auto}
+.full-w{padding:5rem 6vw}
+hr.div{border:none;border-top:1px solid var(--border);margin:0 6vw}
+.sh{display:flex;align-items:center;gap:1.25rem;margin-bottom:3rem}
+.sh-num{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:3px}
+.sh-title{font-family:var(--display);font-size:clamp(1.6rem,3vw,2.5rem);font-weight:800;color:var(--t1);text-transform:uppercase;letter-spacing:2px}
+.sh-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border2),transparent)}
+
+/* ═══════ ABOUT ═══════ */
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.about-text{color:var(--t2);font-size:.95rem;line-height:1.9}
+.about-text p{margin-bottom:1.1rem}
+.about-text strong{color:var(--t1);font-weight:500}
+.hl{color:var(--cyan)}
+.about-info{display:grid;gap:.75rem}
+.info-row{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r4)}
+.info-icon{font-size:1.1rem;flex-shrink:0}
+.info-label{font-family:var(--mono);font-size:10px;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase}
+.info-val{font-size:.9rem;color:var(--t1);font-weight:500}
+
+/* ═══════ PLATFORM STATS ═══════ */
+.platforms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.plat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r8);padding:2rem;position:relative;overflow:hidden;transition:all .25s}
+.plat-card:hover{transform:translateY(-5px);border-color:var(--border2)}
+.plat-card-glow{position:absolute;inset:0;opacity:0;transition:opacity .3s}
+.plat-card:hover .plat-card-glow{opacity:1}
+.plat-card.thm .plat-card-glow{background:radial-gradient(ellipse at top left,rgba(0,255,136,.05),transparent 60%)}
+.plat-card.htb .plat-card-glow{background:radial-gradient(ellipse at top left,rgba(0,212,255,.05),transparent 60%)}
+.plat-card.ps .plat-card-glow{background:radial-gradient(ellipse at top left,rgba(255,140,0,.05),transparent 60%)}
+.plat-logo{font-family:var(--display);font-size:1.2rem;font-weight:800;letter-spacing:2px;margin-bottom:1rem}
+.plat-card.thm .plat-logo{color:var(--green)}
+.plat-card.htb .plat-logo{color:var(--cyan)}
+.plat-card.ps  .plat-logo{color:var(--orange)}
+.plat-big{font-family:var(--display);font-size:3.5rem;font-weight:800;line-height:1;margin-bottom:.25rem}
+.plat-card.thm .plat-big{color:var(--green)}
+.plat-card.htb .plat-big{color:var(--cyan)}
+.plat-card.ps  .plat-big{color:var(--orange)}
+.plat-desc{font-size:.85rem;color:var(--t2);margin-bottom:1.25rem}
+.plat-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-top:1rem}
+.ps-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r4);padding:.6rem .5rem;text-align:center}
+.ps-item-num{font-family:var(--mono);font-size:1.1rem;font-weight:500;color:var(--t1);display:block}
+.ps-item-label{font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:1px;display:block;margin-top:2px}
+.plat-progress{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-top:1rem}
+.plat-progress-fill{height:100%;border-radius:2px}
+.pfill-green{background:linear-gradient(90deg,#00cc6a,var(--green))}
+.pfill-cyan{background:linear-gradient(90deg,var(--cyan2),var(--cyan))}
+.pfill-orange{background:linear-gradient(90deg,#cc6600,var(--orange))}
+.plat-progress-label{font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:.4rem}
+
+/* ═══════ TOOLS / PROJECTS ═══════ */
+.tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.tool-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r8);padding:1.5rem;position:relative;overflow:hidden;transition:all .25s;display:flex;flex-direction:column}
+.tool-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.tool-card.starred{border-color:rgba(255,215,0,.25)}
+.tool-card.starred:hover{border-color:rgba(255,215,0,.5)}
+.tool-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--cyan);transition:width .35s}
+.tool-card:hover::after{width:100%}
+.tool-tag-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem;flex-wrap:wrap}
+.tool-lang{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:2px;letter-spacing:.5px}
+.lang-py{background:rgba(0,212,255,.1);color:var(--cyan);border:1px solid rgba(0,212,255,.3)}
+.lang-php{background:rgba(168,85,247,.1);color:var(--purple);border:1px solid rgba(168,85,247,.3)}
+.lang-java{background:rgba(255,140,0,.1);color:var(--orange);border:1px solid rgba(255,140,0,.3)}
+.lang-html{background:rgba(255,59,96,.1);color:var(--red);border:1px solid rgba(255,59,96,.3)}
+.lang-lua{background:rgba(0,255,136,.1);color:var(--green);border:1px solid rgba(0,255,136,.3)}
+.stars-row{font-family:var(--mono);font-size:10px;color:var(--yellow);margin-left:auto}
+.tool-title{font-size:1rem;font-weight:600;color:var(--t1);margin-bottom:.4rem}
+.tool-desc{font-size:.85rem;color:var(--t2);line-height:1.65;flex:1}
+.tool-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--border)}
+.tool-link{font-family:var(--mono);font-size:10px;color:var(--t3);letter-spacing:1px;transition:color .2s}
+.tool-link:hover{color:var(--cyan)}
+.tool-type{font-family:var(--mono);font-size:9px;padding:2px 8px;background:var(--bg3);color:var(--t3);border:1px solid var(--border)}
+
+/* FEATURED tools */
+.tools-featured{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-bottom:1.5rem}
+.tool-card-lg{background:var(--bg2);border:1px solid rgba(0,212,255,.25);border-radius:var(--r8);padding:2rem;position:relative;overflow:hidden;transition:all .25s}
+.tool-card-lg:hover{transform:translateY(-4px);border-color:rgba(0,212,255,.45)}
+.tool-card-lg .tool-title{font-size:1.15rem}
+.feat-label{position:absolute;top:0;right:20px;font-family:var(--mono);font-size:9px;padding:4px 12px;letter-spacing:1.5px;background:rgba(0,212,255,.1);color:var(--cyan);border:1px solid rgba(0,212,255,.3);border-top:none}
+
+/* ═══════ WRITEUPS ═══════ */
+.writeups-wrap{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.writeup-col-title{font-family:var(--mono);font-size:12px;color:var(--cyan);letter-spacing:3px;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
+.writeup-col-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.writeup-cat{margin-bottom:1.25rem}
+.wcat-header{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r4) var(--r4) 0 0;cursor:pointer;transition:border-color .2s}
+.wcat-header:hover{border-color:var(--border2)}
+.wcat-name{font-family:var(--mono);font-size:11px;color:var(--t1);letter-spacing:1px}
+.wcat-count{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:12px}
+.cc-blue{background:rgba(0,212,255,.12);color:var(--cyan);border:1px solid rgba(0,212,255,.25)}
+.cc-green{background:rgba(0,255,136,.12);color:var(--green);border:1px solid rgba(0,255,136,.25)}
+.cc-orange{background:rgba(255,140,0,.12);color:var(--orange);border:1px solid rgba(255,140,0,.25)}
+.cc-purple{background:rgba(168,85,247,.12);color:var(--purple);border:1px solid rgba(168,85,247,.25)}
+.cc-red{background:rgba(255,59,96,.12);color:var(--red);border:1px solid rgba(255,59,96,.25)}
+.wcat-body{border:1px solid var(--border);border-top:none;border-radius:0 0 var(--r4) var(--r4);overflow:hidden;display:none}
+.wcat-body.open{display:block}
+.witem{display:flex;align-items:center;gap:.75rem;padding:.55rem 1rem;border-bottom:1px solid var(--border);font-size:.83rem;color:var(--t2);transition:background .15s}
+.witem:last-child{border-bottom:none}
+.witem:hover{background:var(--bg3);color:var(--t1)}
+.witem-icon{font-size:.75rem;flex-shrink:0;color:var(--green)}
+.witem-name{flex:1}
+.witem-diff{font-family:var(--mono);font-size:9px;padding:1px 6px;border-radius:2px}
+.diff-e{background:rgba(0,255,136,.1);color:var(--green)}
+.diff-m{background:rgba(255,140,0,.1);color:var(--orange)}
+.diff-h{background:rgba(255,59,96,.1);color:var(--red)}
+.htb-machine{display:flex;align-items:center;gap:.75rem;padding:.6rem 1rem;border-bottom:1px solid var(--border);font-size:.85rem;color:var(--t2);transition:background .15s}
+.htb-machine:last-child{border-bottom:none}
+.htb-machine:hover{background:var(--bg3);color:var(--t1)}
+.htb-os{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:2px;flex-shrink:0}
+.os-linux{background:rgba(0,255,136,.1);color:var(--green)}
+.os-windows{background:rgba(0,212,255,.1);color:var(--cyan)}
+.writeup-cta{display:block;text-align:center;padding:1rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r4);font-family:var(--mono);font-size:11px;color:var(--t3);letter-spacing:1px;transition:all .2s;margin-top:1rem}
+.writeup-cta:hover{border-color:var(--cyan);color:var(--cyan)}
+.writeup-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.ws-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r4);padding:1.25rem;text-align:center}
+.ws-num{font-family:var(--display);font-size:2.5rem;font-weight:800;color:var(--cyan);display:block}
+.ws-label{font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:2px;display:block;margin-top:.2rem}
+
+/* ═══════ SKILLS ═══════ */
+.skills-3col{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.skill-block{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r8);padding:1.5rem;position:relative;overflow:hidden;transition:all .25s}
+.skill-block:hover{border-color:var(--border2);transform:translateY(-3px)}
+.sb-stripe{position:absolute;top:0;left:0;right:0;height:2px}
+.sk-cyan .sb-stripe{background:linear-gradient(90deg,var(--cyan),transparent)}
+.sk-green .sb-stripe{background:linear-gradient(90deg,var(--green),transparent)}
+.sk-orange .sb-stripe{background:linear-gradient(90deg,var(--orange),transparent)}
+.sk-purple .sb-stripe{background:linear-gradient(90deg,var(--purple),transparent)}
+.sk-red .sb-stripe{background:linear-gradient(90deg,var(--red),transparent)}
+.sk-teal .sb-stripe{background:linear-gradient(90deg,#00e5c8,transparent)}
+.sblock-head{display:flex;align-items:center;gap:.6rem;margin-bottom:1.25rem}
+.sblock-icon{font-size:1.2rem}
+.sblock-title{font-family:var(--mono);font-size:11px;color:var(--t1);letter-spacing:2px;text-transform:uppercase}
+.bars{display:flex;flex-direction:column;gap:.75rem}
+.bar-row{display:flex;flex-direction:column;gap:4px}
+.bar-meta{display:flex;justify-content:space-between}
+.bn{font-family:var(--mono);font-size:10px;color:var(--t2)}
+.bv{font-family:var(--mono);font-size:10px}
+.sk-cyan .bv{color:var(--cyan)}.sk-green .bv{color:var(--green)}.sk-orange .bv{color:var(--orange)}.sk-purple .bv{color:var(--purple)}.sk-red .bv{color:var(--red)}.sk-teal .bv{color:#00e5c8}
+.bt{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.bf{height:100%;border-radius:2px;animation:fillBar .9s ease-out both}
+@keyframes fillBar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.bf-cyan{background:linear-gradient(90deg,var(--cyan2),var(--cyan))}.bf-green{background:linear-gradient(90deg,#00cc6a,var(--green))}.bf-orange{background:linear-gradient(90deg,#cc6600,var(--orange))}.bf-purple{background:linear-gradient(90deg,#7c3aed,var(--purple))}.bf-red{background:linear-gradient(90deg,#cc0033,var(--red))}.bf-teal{background:linear-gradient(90deg,#00b09b,#00e5c8)}
+.tags-cloud{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--mono);font-size:9px;padding:3px 9px;border-radius:2px;letter-spacing:.5px}
+.tg-a{border:1px solid rgba(0,212,255,.35);color:var(--cyan);background:rgba(0,212,255,.07)}
+.tg-g{border:1px solid rgba(0,255,136,.35);color:var(--green);background:rgba(0,255,136,.07)}
+.tg-o{border:1px solid rgba(255,140,0,.35);color:var(--orange);background:rgba(255,140,0,.07)}
+.tg-p{border:1px solid rgba(168,85,247,.35);color:var(--purple);background:rgba(168,85,247,.07)}
+.tg-d{border:1px solid var(--border);color:var(--t3)}
+
+/* ═══════ TIMELINE ═══════ */
+.timeline-outer{display:grid;grid-template-columns:1fr 40px 1fr;gap:0}
+.tl-center{position:relative}
+.tl-center-line{position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--cyan),var(--border2),var(--border),transparent);transform:translateX(-50%)}
+.tl-dot{position:absolute;left:50%;transform:translateX(-50%);width:10px;height:10px;border-radius:50%;background:var(--cyan);border:2px solid var(--bg);box-shadow:0 0 8px var(--cyan)}
+.tl-dot.active{background:var(--orange);box-shadow:0 0 10px var(--orange)}
+.tl-l{padding:0 2rem 2.5rem 0}
+.tl-r{padding:0 0 2.5rem 2rem}
+.tl-empty{padding-bottom:2.5rem}
+.tl-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r8);padding:1.1rem 1.25rem;transition:border-color .2s}
+.tl-card:hover{border-color:var(--border2)}
+.tl-date{font-family:var(--mono);font-size:9px;color:var(--cyan);letter-spacing:2px;margin-bottom:.4rem}
+.tl-title{font-size:.9rem;font-weight:600;color:var(--t1);margin-bottom:.35rem}
+.tl-desc{font-size:.8rem;color:var(--t2);line-height:1.6}
+.tl-tools{display:flex;flex-wrap:wrap;gap:4px;margin-top:.6rem}
+.tl-tool{font-family:var(--mono);font-size:8px;padding:2px 7px;border:1px solid var(--border);color:var(--t3);letter-spacing:.5px;border-radius:2px}
+
+/* ═══════ CERTIFICATIONS ═══════ */
+.certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.cert-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r8);padding:1.5rem;display:flex;flex-direction:column;gap:.75rem;transition:all .2s}
+.cert-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.cert-icon{font-size:1.8rem}
+.cert-name{font-size:.9rem;font-weight:600;color:var(--t1)}
+.cert-org{font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase}
+.cstat{font-family:var(--mono);font-size:9px;padding:3px 10px;display:inline-block;letter-spacing:1px;border-radius:2px;align-self:flex-start}
+.cs-done{background:rgba(0,255,136,.1);color:var(--green);border:1px solid rgba(0,255,136,.25)}
+.cs-prog{background:rgba(0,212,255,.1);color:var(--cyan);border:1px solid rgba(0,212,255,.25)}
+.cs-plan{background:var(--bg3);color:var(--t3);border:1px solid var(--border)}
+
+/* ═══════ CONTACT ═══════ */
+.contact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-bottom:3rem}
+.contact-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r8);padding:1.5rem;text-decoration:none;display:flex;flex-direction:column;gap:.6rem;transition:all .25s;position:relative;overflow:hidden}
+.contact-card:hover{border-color:var(--border2);transform:translateY(-4px)}
+.contact-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--cyan);transform:scaleX(0);transition:transform .3s;transform-origin:left}
+.contact-card:hover::before{transform:scaleX(1)}
+.cc-icon{font-size:1.5rem}
+.cc-label{font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:2px;text-transform:uppercase}
+.cc-handle{font-size:.9rem;font-weight:600;color:var(--t1)}
+.cc-sub{font-family:var(--mono);font-size:10px;color:var(--cyan)}
+.hire-box{background:var(--bg2);border:1px solid rgba(0,212,255,.25);border-radius:var(--r8);padding:2.5rem;text-align:center;position:relative;overflow:hidden}
+.hire-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(0,212,255,.06),transparent);pointer-events:none}
+.hire-title{font-family:var(--display);font-size:2rem;font-weight:800;color:var(--t1);margin-bottom:.75rem}
+.hire-desc{color:var(--t2);max-width:500px;margin:0 auto 1.5rem;font-size:.95rem}
+.hire-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-bottom:2rem}
+.hire-pill{font-family:var(--mono);font-size:10px;padding:5px 14px;border:1px solid var(--border2);color:var(--t2);border-radius:14px}
+.hire-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* ═══════ FOOTER ═══════ */
+footer{border-top:1px solid var(--border);padding:1.75rem 6vw;display:flex;align-items:center;justify-content:space-between}
+.ft-l{font-family:var(--mono);font-size:10px;color:var(--t3)}
+.ft-l span{color:var(--cyan)}
+.ft-r{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;color:var(--t3)}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,255,136,.4)}50%{box-shadow:0 0 0 5px rgba(0,255,136,0)}}
+
+/* ═══════ RESPONSIVE ═══════ */
+@media(max-width:1100px){
+  .tools-grid{grid-template-columns:repeat(2,1fr)}
+  .platforms-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;gap:3rem}
+  .hero-r{display:none}
+  .about-wrap{grid-template-columns:1fr}
+  .writeups-wrap{grid-template-columns:1fr}
+  .skills-3col,.certs-grid{grid-template-columns:repeat(2,1fr)}
+  .contact-grid{grid-template-columns:repeat(2,1fr)}
+  .timeline-outer{grid-template-columns:1fr}
+  .tl-center{display:none}
+  .tl-l,.tl-r{padding:0 0 1.5rem}
+  .writeup-stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  .tools-featured{grid-template-columns:1fr}
+  .tools-grid{grid-template-columns:1fr}
+  .platforms-grid{grid-template-columns:1fr}
+  .skills-3col,.certs-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr 1fr}
+  nav .nav-links{display:none}
+  footer{flex-direction:column;gap:.75rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-id">
+    <span style="color:var(--t3)">~/</span>pasindu-sandeepa<span style="color:var(--t3)">.sh</span>&nbsp;<span class="blink" style="color:var(--cyan)">▋</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">about</a></li>
+    <li><a href="#platforms">platforms</a></li>
+    <li><a href="#tools">tools</a></li>
+    <li><a href="#writeups">writeups</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+  <a href="mailto:dilharawijesinghe86@gmail.com" class="nav-hire">HIRE ME ↗</a>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow1"></div>
+  <div class="hero-glow2"></div>
+
+  <div class="hero-l">
+    <div class="hero-eyebrow">ETHICAL HACKER · SECURITY RESEARCHER · TOOL BUILDER</div>
+    <h1 class="hero-name">
+      PASINDU<br>
+      <span class="accent">SANDEEPA</span>
+    </h1>
+    <p class="hero-tagline"><span id="typed"></span><span class="cur">▋</span></p>
+    <p class="hero-desc">
+      BSc Computer Science undergraduate · Eastern University, Sri Lanka.<br>
+      Building real security tools, completing lab platforms, and documenting
+      <strong>121 original writeups</strong> across PortSwigger & HackTheBox.
+      Actively preparing for bug bounty submissions.
+    </p>
+
+    <div class="platform-row">
+      <div class="plat-badge">
+        <div class="plat-dot dot-green"></div>
+        <span class="plat-name">TryHackMe</span>
+        <span class="plat-val">Top 20%</span>
+      </div>
+      <div class="plat-badge">
+        <div class="plat-dot dot-cyan"></div>
+        <span class="plat-name">HackTheBox</span>
+        <span class="plat-val">#993 Global</span>
+      </div>
+      <div class="plat-badge">
+        <div class="plat-dot dot-orange"></div>
+        <span class="plat-name">PortSwigger</span>
+        <span class="plat-val">93 Labs Done</span>
+      </div>
+      <div class="plat-badge">
+        <div class="plat-dot dot-purple"></div>
+        <span class="plat-name">GitHub</span>
+        <span class="plat-val">15+ Security Tools</span>
+      </div>
+    </div>
+
+    <div class="hero-ctas">
+      <a href="#writeups" class="cta-p">VIEW WRITEUPS</a>
+      <a href="https://github.com/Pasindu-sd" target="_blank" class="cta-s">GITHUB ↗</a>
+      <a href="https://www.linkedin.com/in/pasindu-sandeepa-cybersecurity" target="_blank" class="cta-s">LINKEDIN ↗</a>
+    </div>
+  </div>
+
+  <div class="hero-r">
+    <div class="stat-card sc-green">
+      <div class="stat-card-label">TryHackMe · DilHash</div>
+      <div class="stat-card-main">
+        <span class="stat-num">Top 20%</span>
+        <span class="stat-detail">Global Rank</span>
+      </div>
+      <div class="stat-sub">VOYAGER [0x6] · 26 Rooms · 5 Badges · Student</div>
+    </div>
+    <div class="stat-card sc-cyan">
+      <div class="stat-card-label">HackTheBox · PasinduSD</div>
+      <div class="stat-card-main">
+        <span class="stat-num">#993</span>
+        <span class="stat-detail">Global Ranking</span>
+      </div>
+      <div class="stat-sub">19 Flags Captured · Season 10 Active</div>
+    </div>
+    <div class="stat-card sc-orange">
+      <div class="stat-card-label">PortSwigger Web Security Academy</div>
+      <div class="stat-card-main">
+        <span class="stat-num">93</span>
+        <span class="stat-detail">Labs Completed</span>
+      </div>
+      <div class="stat-sub">30 Apprentice · 61 Practitioner · 2 Expert · 34% Overall</div>
+    </div>
+    <div class="stat-card sc-purple">
+      <div class="stat-card-label">Documented Writeups</div>
+      <div class="stat-card-main">
+        <span class="stat-num">121</span>
+        <span class="stat-detail">Total Writeups</span>
+      </div>
+      <div class="stat-sub">102 PortSwigger Labs + 19 HTB Machines &amp; Challenges</div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ═══════ ABOUT ═══════ -->
+<section class="section" id="about">
+  <div class="sh"><span class="sh-num">01 //</span><h2 class="sh-title">About Me</h2><div class="sh-line"></div></div>
+  <div class="about-wrap">
+    <div class="about-text">
+      <p>I'm <strong>Pasindu Sandeepa</strong> (Pasiya), a cybersecurity researcher and BSc Computer Science undergraduate at <span class="hl">Eastern University, Sri Lanka</span>. I'm deeply passionate about offensive security — finding vulnerabilities, understanding how systems break, and building tools that solve real problems.</p>
+      <p>I've completed a rigorous <strong>16-week structured cybersecurity program</strong>, covering everything from Linux fundamentals to Active Directory attacks, SIEM tools, MITRE ATT&CK, and bug bounty methodology. Every topic is documented with hands-on labs, not just theory.</p>
+      <p>On the practical side, I have <span class="hl">121 documented writeups</span> across HackTheBox machines and PortSwigger Web Security Academy — covering 14 distinct vulnerability categories from SQL injection to OAuth attacks. I also built <strong>15+ original security tools</strong> in Python, covering phishing detection, network scanning, log analysis, and more.</p>
+      <p>Currently: <span class="hl">Top 20%</span> on TryHackMe, <span class="hl">#993 globally</span> on HackTheBox, <span class="hl">34% overall completion</span> on PortSwigger Academy. Preparing for my first bug bounty submission.</p>
+    </div>
+    <div class="about-info">
+      <div class="info-row"><div class="info-icon">🎓</div><div><div class="info-label">University</div><div class="info-val">Eastern University — BSc Computer Science</div></div></div>
+      <div class="info-row"><div class="info-icon">📍</div><div><div class="info-label">Location</div><div class="info-val">Polonnaruwa, Sri Lanka 🇱🇰</div></div></div>
+      <div class="info-row"><div class="info-icon">🎯</div><div><div class="info-label">Current Focus</div><div class="info-val">Bug Bounty Prep + PortSwigger Labs</div></div></div>
+      <div class="info-row"><div class="info-icon">📝</div><div><div class="info-label">Writeups</div><div class="info-val">102 PortSwigger + 19 HackTheBox = 121 Total</div></div></div>
+      <div class="info-row"><div class="info-icon">🔭</div><div><div class="info-label">Goal</div><div class="info-val">Penetration Tester / Red Team Operator</div></div></div>
+      <div class="info-row"><div class="info-icon">📧</div><div><div class="info-label">Email</div><div class="info-val">dilharawijesinghe86@gmail.com</div></div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ═══════ PLATFORMS ═══════ -->
+<section class="section" id="platforms">
+  <div class="sh"><span class="sh-num">02 //</span><h2 class="sh-title">Platform Stats</h2><div class="sh-line"></div></div>
+  <div class="platforms-grid">
+
+    <div class="plat-card thm">
+      <div class="plat-card-glow"></div>
+      <div class="plat-logo">TryHackMe</div>
+      <div class="plat-big">Top 20%</div>
+      <div class="plat-desc">Username: <strong>DilHash</strong> · VOYAGER [0x6] rank · Student badge</div>
+      <div class="plat-stats-row">
+        <div class="ps-item"><span class="ps-item-num" style="color:var(--green)">26</span><span class="ps-item-label">Rooms Done</span></div>
+        <div class="ps-item"><span class="ps-item-num" style="color:var(--green)">5</span><span class="ps-item-label">Badges</span></div>
+        <div class="ps-item"><span class="ps-item-num" style="color:var(--green)">34</span><span class="ps-item-label">Points</span></div>
+      </div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:1rem;">Current path: SOC Level 1 · 8%</div>
+      <div class="plat-progress" style="margin-top:.5rem"><div class="plat-progress-fill pfill-green" style="width:8%"></div></div>
+      <div class="plat-progress-label">SOC Level 1 — In Progress</div>
+    </div>
+
+    <div class="plat-card htb">
+      <div class="plat-card-glow"></div>
+      <div class="plat-logo">HackTheBox</div>
+      <div class="plat-big">#993</div>
+      <div class="plat-desc">Username: <strong>PasinduSD</strong> · Noob rank · Season 10 active</div>
+      <div class="plat-stats-row">
+        <div class="ps-item"><span class="ps-item-num" style="color:var(--cyan)">19</span><span class="ps-item-label">Flags</span></div>
+        <div class="ps-item"><span class="ps-item-num" style="color:var(--cyan)">993</span><span class="ps-item-label">Global Rank</span></div>
+        <div class="ps-item"><span class="ps-item-num" style="color:var(--cyan)">19</span><span class="ps-item-label">Writeups</span></div>
+      </div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:1rem;">Machines: 18 · Challenges: 1 · Mixed Linux/Windows</div>
+      <div class="plat-progress" style="margin-top:.5rem"><div class="plat-progress-fill pfill-cyan" style="width:35%"></div></div>
+      <div class="plat-progress-label">Starting Point Path — Progressing</div>
+    </div>
+
+    <div class="plat-card ps">
+      <div class="plat-card-glow"></div>
+      <div class="plat-logo">PortSwigger Academy</div>
+      <div class="plat-big">34%</div>
+      <div class="plat-desc">Newbie → Apprentice level · 14 vulnerability categories covered</div>
+      <div class="plat-stats-row">
+        <div class="ps-item"><span class="ps-item-num" style="color:var(--orange)">30</span><span class="ps-item-label">Apprentice</span></div>
+        <div class="ps-item"><span class="ps-item-num" style="color:var(--orange)">61</span><span class="ps-item-label">Practitioner</span></div>
+        <div class="ps-item"><span class="ps-item-num" style="color:var(--orange)">2</span><span class="ps-item-label">Expert</span></div>
+      </div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:1rem;">93 total labs · 102 documented writeups</div>
+      <div class="plat-progress" style="margin-top:.5rem"><div class="plat-progress-fill pfill-orange" style="width:34%"></div></div>
+      <div class="plat-progress-label">34% Vulnerability Labs Complete</div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ═══════ TOOLS ═══════ -->
+<section class="section" id="tools">
+  <div class="sh"><span class="sh-num">03 //</span><h2 class="sh-title">Security Tools Built</h2><div class="sh-line"></div></div>
+
+  <div class="tools-featured">
+    <div class="tool-card-lg starred">
+      <div class="feat-label">★ TOP PROJECT</div>
+      <div class="tool-tag-row"><span class="tool-lang lang-py">Python</span><span class="stars-row">★★ 2 stars</span></div>
+      <div class="tool-title">Windows-PhishGuard</div>
+      <div class="tool-desc">Desktop application that detects <strong>email phishing</strong> and <strong>URL phishing</strong> on Windows systems. Analyzes suspicious links and scam email patterns in real time. A practical defensive security tool that solves a real-world problem.</div>
+      <div class="tool-footer">
+        <a href="https://github.com/Pasindu-sd/Windows-PhishGuard" target="_blank" class="tool-link">github.com/Pasindu-sd/Windows-PhishGuard ↗</a>
+        <span class="tool-type">DEFENSIVE</span>
+      </div>
+    </div>
+    <div class="tool-card-lg starred">
+      <div class="feat-label">★ TOP PROJECT</div>
+      <div class="tool-tag-row"><span class="tool-lang lang-py">Python</span><span class="stars-row">★★★ 3 stars</span></div>
+      <div class="tool-title">Python-Port-Scanner</div>
+      <div class="tool-desc">Simple multi-threaded port scanner built in Python. Scans a target for open ports quickly using threading for performance. A core reconnaissance tool for network security assessments.</div>
+      <div class="tool-footer">
+        <a href="https://github.com/Pasindu-sd" target="_blank" class="tool-link">github.com/Pasindu-sd ↗</a>
+        <span class="tool-type">RECON</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tools-grid">
+    <div class="tool-card starred">
+      <div class="tool-tag-row"><span class="tool-lang lang-py">Python</span><span class="stars-row">★★★ 3</span></div>
+      <div class="tool-title">Brute-Force-Password-Cracker</div>
+      <div class="tool-desc">Simple brute force password cracker in Python for security testing and educational demonstration of authentication weaknesses.</div>
+      <div class="tool-footer"><a href="https://github.com/Pasindu-sd" target="_blank" class="tool-link">View on GitHub ↗</a><span class="tool-type">OFFENSIVE</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-tag-row"><span class="tool-lang lang-py">Python</span><span class="stars-row">★★ 2</span></div>
+      <div class="tool-title">Local-Network-Scanner</div>
+      <div class="tool-desc">Detects devices on a home/lab network including IP, MAC address, open ports, and OS identification.</div>
+      <div class="tool-footer"><a href="https://github.com/Pasindu-sd/Local-Network-Scanner" target="_blank" class="tool-link">View on GitHub ↗</a><span class="tool-type">RECON</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-tag-row"><span class="tool-lang lang-py">Python</span><span class="stars-row">★★ 2</span></div>
+      <div class="tool-title">URL-Phishing-Detector</div>
+      <div class="tool-desc">Checks if a website is fake or dangerous — detects fake login pages that steal passwords and credentials.</div>
+      <div class="tool-footer"><a href="https://github.com/Pasindu-sd" target="_blank" class="tool-link">View on GitHub ↗</a><span class="tool-type">DEFENSIVE</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-tag-row"><span class="tool-lang lang-py">Python</span></div>
+      <div class="tool-title">AI-Phishing-URL-Detector</div>
+      <div class="tool-desc">ML-based phishing URL detection tool that classifies URLs as SAFE or PHISHING using machine learning and basic URL features.</div>
+      <div class="tool-footer"><a href="https://github.com/Pasindu-sd/AI-Phishing-URL-Detector" target="_blank" class="tool-link">View on GitHub ↗</a><span class="tool-type">AI / ML</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-tag-row"><span class="tool-lang lang-py">Python</span></div>
+      <div class="tool-title">Log-Analyzer-and-Threat-Detector</div>
+      <div class="tool-desc">Python tool that reads system/auth logs and detects suspicious patterns — brute force attempts, unusual logins, and more.</div>
+      <div class="tool-footer"><a href="https://github.com/Pasindu-sd" target="_blank" class="tool-link">View on GitHub ↗</a><span class="tool-type">BLUE TEAM</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-tag-row"><span class="tool-lang lang-py">Python</span></div>
+      <div class="tool-title">Linux-Logs-Analyze-Script</div>
+      <div class="tool-desc">Python script for analyzing Linux auth.log files. Automates the tedious process of reviewing system log files for security events.</div>
+      <div class="tool-footer"><a href="https://github.com/Pasindu-sd" target="_blank" class="tool-link">View on GitHub ↗</a><span class="tool-type">BLUE TEAM</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-tag-row"><span class="tool-lang lang-py">Python</span></div>
+      <div class="tool-title">Email-Phishing-Detector</div>
+      <div class="tool-desc">Python tool that detects phishing attempts in emails by checking for common scam patterns, suspicious senders, and phishing keywords.</div>
+      <div class="tool-footer"><a href="https://github.com/Pasindu-sd" target="_blank" class="tool-link">View on GitHub ↗</a><span class="tool-type">DEFENSIVE</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-tag-row"><span class="tool-lang lang-py">Python</span></div>
+      <div class="tool-title">Vulnerability-Scanner</div>
+      <div class="tool-desc">Basic web vulnerability scanner built with Python. Scans target URLs for common web security issues and misconfigurations.</div>
+      <div class="tool-footer"><a href="https://github.com/Pasindu-sd" target="_blank" class="tool-link">View on GitHub ↗</a><span class="tool-type">OFFENSIVE</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-tag-row"><span class="tool-lang lang-php">PHP</span></div>
+      <div class="tool-title">SQL-Injection-Lab</div>
+      <div class="tool-desc">Educational PHP + MySQL vulnerable web app for demonstrating SQL injection attacks. Designed for safe, legal practice of SQLi techniques.</div>
+      <div class="tool-footer"><a href="https://github.com/Pasindu-sd" target="_blank" class="tool-link">View on GitHub ↗</a><span class="tool-type">LAB / PRACTICE</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-tag-row"><span class="tool-lang lang-py">Python</span></div>
+      <div class="tool-title">Hash-Analyzer</div>
+      <div class="tool-desc">Detects simple hash types (MD5/SHA1/SHA256) and attempts to crack them using a provided wordlist. Beginner-friendly hash analysis tool.</div>
+      <div class="tool-footer"><a href="https://github.com/Pasindu-sd" target="_blank" class="tool-link">View on GitHub ↗</a><span class="tool-type">CRYPTO</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-tag-row"><span class="tool-lang lang-py">Python</span></div>
+      <div class="tool-title">Wordlist-Generator</div>
+      <div class="tool-desc">Generates random password wordlists using letters, digits, and symbols. Customizable length, number of entries — saves to file for tool use.</div>
+      <div class="tool-footer"><a href="https://github.com/Pasindu-sd" target="_blank" class="tool-link">View on GitHub ↗</a><span class="tool-type">UTILITY</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-tag-row"><span class="tool-lang lang-py">Python</span></div>
+      <div class="tool-title">Password-Strength-Checker</div>
+      <div class="tool-desc">Analyzes password security using length, character variety, and common password checks. Educational tool for password policy awareness.</div>
+      <div class="tool-footer"><a href="https://github.com/Pasindu-sd" target="_blank" class="tool-link">View on GitHub ↗</a><span class="tool-type">DEFENSIVE</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ═══════ WRITEUPS ═══════ -->
+<section class="section" id="writeups">
+  <div class="sh"><span class="sh-num">04 //</span><h2 class="sh-title">Writeups</h2><div class="sh-line"></div></div>
+
+  <div class="writeup-stats">
+    <div class="ws-card"><span class="ws-num">121</span><span class="ws-label">Total Writeups</span></div>
+    <div class="ws-card"><span class="ws-num" style="color:var(--orange)">102</span><span class="ws-label">PortSwigger Labs</span></div>
+    <div class="ws-card"><span class="ws-num" style="color:var(--green)">19</span><span class="ws-label">HTB Machines</span></div>
+    <div class="ws-card"><span class="ws-num" style="color:var(--purple)">14</span><span class="ws-label">Vuln Categories</span></div>
+  </div>
+
+  <div class="writeups-wrap">
+
+    <!-- PortSwigger -->
+    <div>
+      <div class="writeup-col-title">PORTSWIGGER WEB SECURITY ACADEMY</div>
+
+      <div class="writeup-cat">
+        <div class="wcat-header" onclick="toggle(this)">
+          <span class="wcat-name">🔐 Access Control Vulnerabilities</span>
+          <span class="wcat-count cc-blue">13 writeups</span>
+        </div>
+        <div class="wcat-body open">
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Unprotected admin functionality</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Unprotected admin with unpredictable URL</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">User role controlled by request parameter</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">User role can be modified in user profile</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">URL-based access control can be circumvented</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Method-based access control can be circumvented</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">User ID controlled by request parameter</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">User ID controlled by request parameter with data leakage</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">User ID controlled by request parameter with password disclosure</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Insecure direct object references (IDOR)</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Multi-step process with no access control on one step</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Referer-based access control</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">User ID controlled by parameter with unpredictable user IDs</span><span class="witem-diff diff-m">Medium</span></div>
+        </div>
+      </div>
+
+      <div class="writeup-cat">
+        <div class="wcat-header" onclick="toggle(this)">
+          <span class="wcat-name">🔑 Authentication Bypass</span>
+          <span class="wcat-count cc-orange">7 writeups</span>
+        </div>
+        <div class="wcat-body">
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">2FA broken logic</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Brute-forcing a stay-logged-in cookie</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Offline password cracking</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Password brute-force via password change</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Password reset broken logic</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Password reset poisoning via middleware</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Broken brute-force protection — multiple credentials per request</span><span class="witem-diff diff-h">Hard</span></div>
+        </div>
+      </div>
+
+      <div class="writeup-cat">
+        <div class="wcat-header" onclick="toggle(this)">
+          <span class="wcat-name">⚙️ Business Logic Vulnerabilities</span>
+          <span class="wcat-count cc-purple">10 writeups</span>
+        </div>
+        <div class="wcat-body">
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Excessive trust in client-side controls</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">High-level logic vulnerability</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Low-level logic flaw</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Inconsistent security controls</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Inconsistent handling of exceptional input</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Weak isolation on dual-use endpoint</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Insufficient workflow validation</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Authentication bypass via flawed state machine</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Infinite money logic flaw</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Authentication bypass via encryption oracle</span><span class="witem-diff diff-h">Hard</span></div>
+        </div>
+      </div>
+
+      <div class="writeup-cat">
+        <div class="wcat-header" onclick="toggle(this)">
+          <span class="wcat-name">📁 File Upload Vulnerabilities</span>
+          <span class="wcat-count cc-red">4 writeups</span>
+        </div>
+        <div class="wcat-body">
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Remote code execution via web shell upload</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Web shell upload via Content-Type restriction bypass</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Web shell upload via extension blacklist bypass</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Remote code execution via polyglot web shell upload</span><span class="witem-diff diff-m">Medium</span></div>
+        </div>
+      </div>
+
+      <div class="writeup-cat">
+        <div class="wcat-header" onclick="toggle(this)">
+          <span class="wcat-name">🔀 HTTP Request Smuggling</span>
+          <span class="wcat-count cc-blue">PDFs + Labs</span>
+        </div>
+        <div class="wcat-body">
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">HTTP Request Smuggling — Explanation & Research (2 PDFs)</span><span class="witem-diff diff-h">Hard</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Multiple lab writeups with screenshots</span><span class="witem-diff diff-m">Medium</span></div>
+        </div>
+      </div>
+
+      <div class="writeup-cat">
+        <div class="wcat-header" onclick="toggle(this)">
+          <span class="wcat-name">🗄️ SQL Injection</span>
+          <span class="wcat-count cc-orange">Multiple Labs</span>
+        </div>
+        <div class="wcat-body">
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Multiple SQLi writeups across apprentice & practitioner</span><span class="witem-diff diff-m">Medium</span></div>
+        </div>
+      </div>
+
+      <div class="writeup-cat">
+        <div class="wcat-header" onclick="toggle(this)">
+          <span class="wcat-name">+ 8 More Categories Covered</span>
+          <span class="wcat-count cc-green">+68 writeups</span>
+        </div>
+        <div class="wcat-body">
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Insecure Deserialization — Labs + writeups</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">JWT Attacks — Labs + writeups</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">NoSQL Injection — Labs + writeups</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">OAuth Authentication — Labs + writeups</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">OS Command Injection — Labs + writeups</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Path Traversal — Labs + writeups</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Server-Side Request Forgery (SSRF) — Labs + writeups</span></div>
+          <div class="witem"><span class="witem-icon">✓</span><span class="witem-name">Server-Side Template Injection (SSTI) — Labs + writeups</span></div>
+        </div>
+      </div>
+
+      <a href="https://github.com/Pasindu-sd/Cybersecurity-Notes" target="_blank" class="writeup-cta">View All PortSwigger Notes on GitHub ↗</a>
+    </div>
+
+    <!-- HackTheBox -->
+    <div>
+      <div class="writeup-col-title">HACKTHEBOX MACHINES & CHALLENGES</div>
+
+      <div class="writeup-cat">
+        <div class="wcat-header" onclick="toggle(this)">
+          <span class="wcat-name">🐧 Linux Machines</span>
+          <span class="wcat-count cc-green">15 writeups</span>
+        </div>
+        <div class="wcat-body open">
+          <div class="htb-machine"><span class="htb-os os-linux">Linux</span><span style="flex:1">Cap</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="htb-machine"><span class="htb-os os-linux">Linux</span><span style="flex:1">Crocodile</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="htb-machine"><span class="htb-os os-linux">Linux</span><span style="flex:1">Oopsie</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="htb-machine"><span class="htb-os os-linux">Linux</span><span style="flex:1">Sequel</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="htb-machine"><span class="htb-os os-linux">Linux</span><span style="flex:1">Three</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="htb-machine"><span class="htb-os os-linux">Linux</span><span style="flex:1">Vaccine</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="htb-machine"><span class="htb-os os-linux">Linux</span><span style="flex:1">Editor</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="htb-machine"><span class="htb-os os-linux">Linux</span><span style="flex:1">Strutted</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="htb-machine"><span class="htb-os os-linux">Linux</span><span style="flex:1">Unified</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="htb-machine"><span class="htb-os os-linux">Linux</span><span style="flex:1">Previous</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="htb-machine"><span class="htb-os os-linux">Linux</span><span style="flex:1">TwoMillion</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="htb-machine"><span class="htb-os os-linux">Linux</span><span style="flex:1">Expressway</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="htb-machine"><span class="htb-os os-linux">Linux</span><span style="flex:1">HackNet</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="htb-machine"><span class="htb-os os-linux">Linux</span><span style="flex:1">WhiteRabbit</span><span class="witem-diff diff-m">Medium</span></div>
+          <div class="htb-machine"><span class="htb-os os-linux">Linux</span><span style="flex:1">CodePartTwo</span><span class="witem-diff diff-e">Easy</span></div>
+        </div>
+      </div>
+
+      <div class="writeup-cat">
+        <div class="wcat-header" onclick="toggle(this)">
+          <span class="wcat-name">🪟 Windows Machines</span>
+          <span class="wcat-count cc-blue">3 writeups</span>
+        </div>
+        <div class="wcat-body">
+          <div class="htb-machine"><span class="htb-os os-windows">Windows</span><span style="flex:1">Archetype</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="htb-machine"><span class="htb-os os-windows">Windows</span><span style="flex:1">Responder</span><span class="witem-diff diff-e">Easy</span></div>
+          <div class="htb-machine"><span class="htb-os os-windows">Windows</span><span style="flex:1">Signed</span><span class="witem-diff diff-m">Medium</span></div>
+        </div>
+      </div>
+
+      <div class="writeup-cat">
+        <div class="wcat-header" onclick="toggle(this)">
+          <span class="wcat-name">🏴 Challenges</span>
+          <span class="wcat-count cc-purple">1 writeup</span>
+        </div>
+        <div class="wcat-body">
+          <div class="htb-machine"><span class="htb-os" style="background:rgba(168,85,247,.1);color:var(--purple);font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:2px">Challenge</span><span style="flex:1">Spookifier</span><span class="witem-diff diff-e">Easy</span></div>
+        </div>
+      </div>
+
+      <!-- Blog teaser -->
+      <div style="background:var(--bg2);border:1px solid rgba(0,212,255,.2);border-radius:var(--r8);padding:1.75rem;margin-top:1.5rem;text-align:center">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--cyan);letter-spacing:3px;margin-bottom:.75rem">COMING SOON</div>
+        <div style="font-size:1.1rem;font-weight:600;color:var(--t1);margin-bottom:.5rem">Writeups Blog / Website</div>
+        <div style="font-size:.85rem;color:var(--t2);line-height:1.7">All 121 writeups with full screenshots, step-by-step methodology, and tools used will be published as a dedicated blog. Perfect for interview reference and community knowledge sharing.</div>
+        <div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:1rem">
+          <span class="tag tg-a">102 PortSwigger Writeups</span>
+          <span class="tag tg-g">19 HTB Writeups</span>
+          <span class="tag tg-o">Full Screenshots</span>
+          <span class="tag tg-d">Step-by-Step</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ═══════ SKILLS ═══════ -->
+<section class="section" id="skills">
+  <div class="sh"><span class="sh-num">05 //</span><h2 class="sh-title">Skills</h2><div class="sh-line"></div></div>
+  <div class="skills-3col">
+
+    <div class="skill-block sk-cyan"><div class="sb-stripe"></div>
+      <div class="sblock-head"><span class="sblock-icon">🌐</span><span class="sblock-title">Web App Pentesting</span></div>
+      <div class="bars">
+        <div class="bar-row"><div class="bar-meta"><span class="bn">SQL Injection</span><span class="bv">78%</span></div><div class="bt"><div class="bf bf-cyan" style="width:78%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">XSS / CSRF / SSRF</span><span class="bv">72%</span></div><div class="bt"><div class="bf bf-cyan" style="width:72%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">Burp Suite</span><span class="bv">70%</span></div><div class="bt"><div class="bf bf-cyan" style="width:70%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">IDOR / Auth Bypass</span><span class="bv">75%</span></div><div class="bt"><div class="bf bf-cyan" style="width:75%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">File Upload / SSTI</span><span class="bv">65%</span></div><div class="bt"><div class="bf bf-cyan" style="width:65%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="skill-block sk-green"><div class="sb-stripe"></div>
+      <div class="sblock-head"><span class="sblock-icon">📡</span><span class="sblock-title">Network Security</span></div>
+      <div class="bars">
+        <div class="bar-row"><div class="bar-meta"><span class="bn">Nmap / Enumeration</span><span class="bv">82%</span></div><div class="bt"><div class="bf bf-green" style="width:82%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">Wireshark / MITM</span><span class="bv">68%</span></div><div class="bt"><div class="bf bf-green" style="width:68%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">Metasploit</span><span class="bv">62%</span></div><div class="bt"><div class="bf bf-green" style="width:62%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">WiFi Security</span><span class="bv">58%</span></div><div class="bt"><div class="bf bf-green" style="width:58%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">NSE Scripts</span><span class="bv">60%</span></div><div class="bt"><div class="bf bf-green" style="width:60%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="skill-block sk-purple"><div class="sb-stripe"></div>
+      <div class="sblock-head"><span class="sblock-icon">🏢</span><span class="sblock-title">Active Directory</span></div>
+      <div class="bars">
+        <div class="bar-row"><div class="bar-meta"><span class="bn">AD Enumeration</span><span class="bv">58%</span></div><div class="bt"><div class="bf bf-purple" style="width:58%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">BloodHound</span><span class="bv">52%</span></div><div class="bt"><div class="bf bf-purple" style="width:52%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">Kerberoasting</span><span class="bv">50%</span></div><div class="bt"><div class="bf bf-purple" style="width:50%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">Mimikatz / LSASS</span><span class="bv">45%</span></div><div class="bt"><div class="bf bf-purple" style="width:45%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">MITRE ATT&CK</span><span class="bv">62%</span></div><div class="bt"><div class="bf bf-purple" style="width:62%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="skill-block sk-orange"><div class="sb-stripe"></div>
+      <div class="sblock-head"><span class="sblock-icon">🔭</span><span class="sblock-title">SIEM & Blue Team</span></div>
+      <div class="bars">
+        <div class="bar-row"><div class="bar-meta"><span class="bn">ELK Stack</span><span class="bv">60%</span></div><div class="bt"><div class="bf bf-orange" style="width:60%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">Splunk</span><span class="bv">58%</span></div><div class="bt"><div class="bf bf-orange" style="width:58%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">Wazuh / OSSEC</span><span class="bv">55%</span></div><div class="bt"><div class="bf bf-orange" style="width:55%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">Log Analysis</span><span class="bv">65%</span></div><div class="bt"><div class="bf bf-orange" style="width:65%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">Threat Hunting</span><span class="bv">55%</span></div><div class="bt"><div class="bf bf-orange" style="width:55%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="skill-block sk-teal"><div class="sb-stripe"></div>
+      <div class="sblock-head"><span class="sblock-icon">💻</span><span class="sblock-title">Programming</span></div>
+      <div class="bars">
+        <div class="bar-row"><div class="bar-meta"><span class="bn">Python</span><span class="bv">75%</span></div><div class="bt"><div class="bf bf-teal" style="width:75%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">Bash / Shell</span><span class="bv">68%</span></div><div class="bt"><div class="bf bf-teal" style="width:68%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">Java</span><span class="bv">72%</span></div><div class="bt"><div class="bf bf-teal" style="width:72%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">PHP / MySQL</span><span class="bv">55%</span></div><div class="bt"><div class="bf bf-teal" style="width:55%"></div></div></div>
+        <div class="bar-row"><div class="bar-meta"><span class="bn">HTML / CSS / JS</span><span class="bv">65%</span></div><div class="bt"><div class="bf bf-teal" style="width:65%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="skill-block sk-red"><div class="sb-stripe"></div>
+      <div class="sblock-head"><span class="sblock-icon">⚙️</span><span class="sblock-title">Tools & Platforms</span></div>
+      <div style="display:flex;flex-direction:column;gap:.75rem">
+        <div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:1px;margin-bottom:.4rem">PENTESTING</div><div class="tags-cloud"><span class="tag tg-a">Burp Suite</span><span class="tag tg-a">Metasploit</span><span class="tag tg-a">Nmap</span><span class="tag tg-a">Gobuster</span><span class="tag tg-d">Hydra</span><span class="tag tg-d">SQLmap</span></div></div>
+        <div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:1px;margin-bottom:.4rem">PLATFORMS</div><div class="tags-cloud"><span class="tag tg-g">TryHackMe</span><span class="tag tg-g">HackTheBox</span><span class="tag tg-o">PortSwigger</span><span class="tag tg-d">HackerOne</span></div></div>
+        <div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:1px;margin-bottom:.4rem">ENVIRONMENT</div><div class="tags-cloud"><span class="tag tg-a">Kali Linux</span><span class="tag tg-a">VMware</span><span class="tag tg-d">Wireshark</span><span class="tag tg-d">Maltego</span></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ═══════ CERTS ═══════ -->
+<section class="section" id="certs">
+  <div class="sh"><span class="sh-num">06 //</span><h2 class="sh-title">Certifications & Roadmap</h2><div class="sh-line"></div></div>
+  <div class="certs-grid">
+    <div class="cert-card"><div class="cert-icon">🟢</div><div class="cert-name">TryHackMe — VOYAGER Rank</div><div class="cert-org">TRYHACKME · DilHash · Top 20%</div><div class="cstat cs-done">✓ ACTIVE — TOP 20%</div></div>
+    <div class="cert-card"><div class="cert-icon">🔵</div><div class="cert-name">PortSwigger Web Security</div><div class="cert-org">PORTSWIGGER ACADEMY · 93 Labs Done</div><div class="cstat cs-prog">⟳ 34% — IN PROGRESS</div></div>
+    <div class="cert-card"><div class="cert-icon">🏴</div><div class="cert-name">HackTheBox — #993 Global</div><div class="cert-org">HACKTHEBOX · PasinduSD · 19 Flags</div><div class="cstat cs-prog">⟳ ACTIVE — PROGRESSING</div></div>
+    <div class="cert-card"><div class="cert-icon">🎯</div><div class="cert-name">Bug Bounty — First Submission</div><div class="cert-org">HACKERONE / BUGCROWD</div><div class="cstat cs-prog">⟳ PREPARING</div></div>
+    <div class="cert-card"><div class="cert-icon">🏆</div><div class="cert-name">CompTIA Security+</div><div class="cert-org">COMPTIA · Entry Level</div><div class="cstat cs-plan">▷ PLANNED</div></div>
+    <div class="cert-card"><div class="cert-icon">💀</div><div class="cert-name">OSCP</div><div class="cert-org">OFFENSIVE SECURITY · 24hr Practical Exam</div><div class="cstat cs-plan">▷ LONG TERM GOAL</div></div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ═══════ CONTACT ═══════ -->
+<section class="section" id="contact">
+  <div class="sh"><span class="sh-num">07 //</span><h2 class="sh-title">Contact</h2><div class="sh-line"></div></div>
+
+  <div class="contact-grid">
+    <a href="https://github.com/Pasindu-sd" target="_blank" class="contact-card">
+      <div class="cc-icon">⌨️</div><div class="cc-label">GitHub</div>
+      <div class="cc-handle">Pasindu-sd</div>
+      <div class="cc-sub">15+ Security Tools · 25 Repos</div>
+    </a>
+    <a href="https://www.linkedin.com/in/pasindu-sandeepa-cybersecurity" target="_blank" class="contact-card">
+      <div class="cc-icon">💼</div><div class="cc-label">LinkedIn</div>
+      <div class="cc-handle">Pasindu Sandeepa</div>
+      <div class="cc-sub">pasindu-sandeepa-cybersecurity</div>
+    </a>
+    <a href="https://tryhackme.com/p/DilHash" target="_blank" class="contact-card">
+      <div class="cc-icon">🟢</div><div class="cc-label">TryHackMe</div>
+      <div class="cc-handle">DilHash</div>
+      <div class="cc-sub">Top 20% · VOYAGER [0x6]</div>
+    </a>
+    <a href="https://app.hackthebox.com/profile/PasinduSD" target="_blank" class="contact-card">
+      <div class="cc-icon">🏴</div><div class="cc-label">HackTheBox</div>
+      <div class="cc-handle">PasinduSD</div>
+      <div class="cc-sub">#993 Global · 19 Flags</div>
+    </a>
+  </div>
+
+  <div class="hire-box">
+    <div class="hire-title">Open to Opportunities</div>
+    <div class="hire-desc">I'm actively looking for internships, junior security analyst roles, or bug bounty collaborations. I bring documented proof of work — 121 writeups, 15+ tools, and active lab progress across three major platforms.</div>
+    <div class="hire-pills">
+      <span class="hire-pill">🔐 Penetration Testing</span>
+      <span class="hire-pill">🐛 Bug Bounty</span>
+      <span class="hire-pill">🔵 SOC Analyst</span>
+      <span class="hire-pill">🔴 Red Team</span>
+      <span class="hire-pill">📝 Security Research</span>
+    </div>
+    <div class="hire-ctas">
+      <a href="mailto:dilharawijesinghe86@gmail.com" class="cta-p">EMAIL ME ↗</a>
+      <a href="https://www.linkedin.com/in/pasindu-sandeepa-cybersecurity" target="_blank" class="cta-s">LINKEDIN ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-l"><span>WIJESINGHE W.P.S.D.</span> · Pasindu Sandeepa · Polonnaruwa, Sri Lanka 🇱🇰 · © 2026</div>
+  <div class="ft-r"><div class="live-dot"></div>Available for Bug Bounty &amp; Internship</div>
+</footer>
+
+<script>
+// TYPED TEXT
+const phrases=['Web Application Penetration Tester','Bug Bounty Hunter — Preparing','Ethical Hacker · 121 Writeups','Security Tool Builder · 15+ Tools','Top 20% TryHackMe · #993 HackTheBox'];
+let pi=0,ci=0,del=false;
+const el=document.getElementById('typed');
+function type(){const c=phrases[pi];el.textContent=del?c.slice(0,--ci):c.slice(0,++ci);if(!del&&ci===c.length){del=true;setTimeout(type,1800);return}if(del&&ci===0){del=false;pi=(pi+1)%phrases.length}setTimeout(type,del?38:75)}
+type();
+
+// ACCORDION
+function toggle(h){const b=h.nextElementSibling;const open=b.classList.toggle('open');h.style.borderColor=open?'var(--border2)':'';const all=document.querySelectorAll('.wcat-body');all.forEach(x=>{if(x!==b)x.classList.remove('open')})}
+</script>
+</body>
+</html>

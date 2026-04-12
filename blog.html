@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Pasindu's Cybersecurity Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+
+/* SEARCH */
+.search{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:6px 12px;
+  border-radius:var(--r);
+  font-size:11px;
+  outline:none;
+  width:180px;
+  transition:.2s;
+}
+.search:focus{
+  border-color:var(--green);
+  box-shadow:0 0 6px rgba(57,211,83,.3);
+}
+
+/* DROPDOWN */
+.dropdown{position:relative}
+.dropbtn{
+  background:none;
+  border:none;
+  color:var(--dim);
+  font-size:11px;
+  cursor:pointer;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.dropbtn:hover{color:var(--green)}
+
+.dropdown-content{
+  display:none;
+  position:absolute;
+  top:28px;
+  right:0;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  min-width:200px;
+  z-index:300;
+  padding:6px 0;
+}
+.dropdown-content a{
+  display:block;
+  padding:8px 12px;
+  font-size:11px;
+  color:var(--dim);
+  cursor:pointer;
+}
+.dropdown-content a:hover{
+  background:rgba(255,255,255,.04);
+  color:var(--green);
+}
+.dropdown:hover .dropdown-content{display:block}
+
+:root {
+  --bg:#080b0f;--surface:#0d1117;--card:#111820;--border:#1c2433;--border2:#243040;
+  --green:#39d353;--cyan:#58a6ff;--red:#f85149;--yellow:#e3b341;--purple:#bc8cff;
+  --text:#cdd9e5;--dim:#768390;--bright:#f0f6fc;
+  --mono:'JetBrains Mono',monospace;--sans:'Syne',sans-serif;
+  --sw:260px;--nav:56px;--r:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.7;min-height:100vh}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+a{color:var(--green);text-decoration:none}a:hover{opacity:.75}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:200;height:var(--nav);background:rgba(8,11,15,.93);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:16px}
+.brand{font-family:var(--sans);font-weight:800;font-size:16px;color:var(--bright);display:flex;align-items:center;gap:10px;flex-shrink:0}
+.dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green);animation:blink 2.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.nav-links{display:flex;gap:20px;margin-left:auto}
+.nav-links a{color:var(--dim);font-size:11px;letter-spacing:.1em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--green);opacity:1}
+.ham{display:none;margin-left:auto;background:none;border:none;cursor:pointer;color:var(--dim);padding:4px}
+
+/* SHELL */
+.shell{display:flex;min-height:calc(100vh - var(--nav))}
+
+/* SIDEBAR */
+.sb{width:var(--sw);flex-shrink:0;border-right:1px solid var(--border);padding:24px 0;position:sticky;top:var(--nav);height:calc(100vh - var(--nav));overflow-y:auto;transition:transform .3s ease}
+.sb-sec{margin-bottom:26px;padding:0 16px}
+.sb-lbl{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;font-family:var(--sans);font-weight:600}
+.sb-a{display:flex;align-items:center;gap:8px;padding:5px 10px;border-radius:var(--r);color:var(--dim);font-size:11px;margin-bottom:1px;border-left:2px solid transparent;transition:all .2s;cursor:pointer}
+.sb-a:hover,.sb-a.act{color:var(--bright);background:rgba(255,255,255,.04);border-left-color:var(--green);opacity:1}
+.sc{margin-left:auto;background:rgba(57,211,83,.1);color:var(--green);font-size:9px;padding:1px 6px;border-radius:10px;font-weight:700}
+.chip{display:inline-block;background:rgba(88,166,255,.07);border:1px solid rgba(88,166,255,.18);color:var(--cyan);font-size:9px;padding:2px 7px;border-radius:2px;margin:2px;letter-spacing:.04em}
+
+/* MAIN */
+.main{flex:1;min-width:0;padding:40px 48px}
+
+/* HERO */
+.hero{margin-bottom:48px;padding-bottom:36px;border-bottom:1px solid var(--border)}
+.eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:14px}
+.hero h1{font-family:var(--sans);font-weight:800;font-size:40px;color:var(--bright);line-height:1.08;margin-bottom:16px}
+.hero h1 span{color:var(--green)}
+.hero-sub{color:var(--dim);max-width:500px;line-height:1.8}
+.stats{display:flex;flex-wrap:wrap;gap:20px;margin-top:30px}
+.pill{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:10px 18px}
+.pv{font-family:var(--sans);font-weight:800;font-size:22px;color:var(--green)}
+.pl{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em}
+
+/* SECTION */
+.sec{margin-bottom:52px}
+.sec-title{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.sec-title h2{font-family:var(--sans);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.si{font-size:15px}
+
+/* CARDS */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;display:flex;flex-direction:column;gap:10px;transition:all .22s;position:relative;overflow:hidden;cursor:pointer}
+.card::after{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--green);transform:scaleY(0);transform-origin:bottom;transition:transform .22s}
+.card:hover{border-color:rgba(57,211,83,.28);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.card:hover::after{transform:scaleY(1)}
+.cn{font-size:9px;color:var(--green);letter-spacing:.15em;opacity:.7}
+.ct{font-family:var(--sans);font-weight:700;font-size:13px;color:var(--bright);line-height:1.35;flex:1}
+.cd{font-size:11px;color:var(--dim);line-height:1.65}
+.cf{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tp{font-size:9px;padding:2px 7px;border-radius:2px;background:rgba(57,211,83,.07);border:1px solid rgba(57,211,83,.15);color:rgba(57,211,83,.8);letter-spacing:.04em}
+.b{font-size:9px;font-weight:700;letter-spacing:.07em;padding:2px 9px;border-radius:2px;font-family:var(--sans)}
+.ba{background:rgba(88,166,255,.1);color:var(--cyan);border:1px solid rgba(88,166,255,.22)}
+.bp{background:rgba(227,179,65,.08);color:var(--yellow);border:1px solid rgba(227,179,65,.22)}
+.be{background:rgba(248,81,73,.1);color:var(--red);border:1px solid rgba(248,81,73,.22)}
+.bh{background:rgba(188,140,255,.08);color:var(--purple);border:1px solid rgba(188,140,255,.22)}
+.arr{color:var(--dim);font-size:14px;transition:color .2s,transform .2s}
+.card:hover .arr{color:var(--green);transform:translateX(4px)}
+
+/* MACHINE LIST */
+.mlist{display:grid;gap:8px}
+.mi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px 18px;display:flex;align-items:center;gap:14px;transition:all .22s;cursor:pointer}
+.mi:hover{border-color:rgba(188,140,255,.3);transform:translateX(4px)}
+.mos{font-size:18px;flex-shrink:0}
+.mn{font-family:var(--sans);font-weight:700;font-size:13px;color:var(--bright)}
+.mm{margin-left:auto;display:flex;align-items:center;gap:8px}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--dim);flex-wrap:wrap;gap:12px}
+.fl{display:flex;gap:16px}
+
+/* OVERLAY */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:150}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.main{padding:32px 24px}.grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}}
+@media(max-width:768px){
+  .nav-links{display:none}.ham{display:block}
+  .sb{position:fixed;top:var(--nav);left:0;bottom:0;z-index:160;background:var(--bg);transform:translateX(-100%);height:calc(100vh - var(--nav))}
+  .sb.open{transform:translateX(0)}.ov.show{display:block}
+  .main{padding:24px 16px}.footer{padding:16px 16px}
+  .hero h1{font-size:28px}.grid{grid-template-columns:1fr}
+  .stats{gap:10px}.pv{font-size:18px}
+}
+@media(max-width:400px){.hero h1{font-size:24px}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="brand">
+    <div class="dot"></div>💀 Pasindu's Blog
+  </div>
+
+  <!-- SEARCH -->
+  <input type="text" id="search" placeholder="Search writeups..." class="search"/>
+
+  <!-- DROPDOWN -->
+  <div class="dropdown">
+    <button class="dropbtn">Topics ▾</button>
+    <div class="dropdown-content">
+      <a onclick="go('access')">🔐 Access Control</a>
+      <a onclick="go('auth')">🔑 Authentication</a>
+      <a onclick="go('biz')">🧠 Business Logic</a>
+      <a onclick="go('fu')">📁 File Upload</a>
+      <a onclick="go('smug')">🚦 HTTP Smuggling</a>
+      <a onclick="go('deser')">📦 Deserialization</a>
+      <a onclick="go('jwt')">🪙 JWT</a>
+      <a onclick="go('nosql')">🍃 NoSQL</a>
+      <a onclick="go('oauth')">🔗 OAuth</a>
+      <a onclick="go('cmd')">💻 Command Injection</a>
+      <a onclick="go('pt')">📂 Path Traversal</a>
+      <a onclick="go('ssrf')">🌐 SSRF</a>
+      <a onclick="go('ssti')">🧩 SSTI</a>
+      <a onclick="go('sqli')">💉 SQLi</a>
+      <a onclick="go('htb')">🤖 HTB Machines</a>
+    </div>
+  </div>
+
+  <button class="ham" id="ham" aria-label="Menu">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+</nav>
+
+<main class="main">
+
+<div class="hero" id="portswigger">
+  <div class="eyebrow">// Cybersecurity Writeups &amp; Research</div>
+  <h1>Pasindu's<br/><span>Hacking</span> Notes</h1>
+  <p class="hero-sub">Personal knowledge base documenting PortSwigger Web Security Academy labs, HackTheBox machines, and ethical hacking techniques — one writeup at a time.</p>
+  <div class="stats">
+    <div class="pill"><span class="pv">100+</span><span class="pl">Writeups</span></div>
+    <div class="pill"><span class="pv">16</span><span class="pl">Categories</span></div>
+    <div class="pill"><span class="pv">2025</span><span class="pl">Season</span></div>
+  </div>
+</div>
+
+<!-- ACCESS CONTROL -->
+<div class="sec" id="access">
+  <div class="sec-title"><span class="si">🔐</span><h2>Access Control Vulnerabilities</h2></div>
+  <div class="grid">
+    <div class="card"><div class="cn">// PS-AC-01</div><div class="ct">Unprotected Admin Functionality</div><div class="cd">Admin panel exposed via robots.txt with no authentication gate.</div><div class="tags"><span class="tp">robots.txt</span><span class="tp">recon</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AC-02</div><div class="ct">Unprotected Admin Functionality with Unpredictable URL</div><div class="cd">Admin URL leaked in page JavaScript source — inspect to reveal the hidden path.</div><div class="tags"><span class="tp">js-recon</span><span class="tp">source-disclosure</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AC-03</div><div class="ct">URL-Based Access Control Can Be Circumvented</div><div class="cd">Front-end blocks /admin but back-end trusts X-Original-URL header. Convert GET→POST to bypass.</div><div class="tags"><span class="tp">X-Original-URL</span><span class="tp">header-injection</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AC-04</div><div class="ct">Method-Based Access Control Can Be Circumvented</div><div class="cd">Admin endpoint only enforces auth on POST. Switch to GET with low-priv session token.</div><div class="tags"><span class="tp">GET-override</span><span class="tp">session-swap</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AC-05</div><div class="ct">User ID Controlled by Request Parameter</div><div class="cd">Change the id parameter to another user's ID to leak their API key.</div><div class="tags"><span class="tp">idor</span><span class="tp">param-tampering</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AC-06</div><div class="ct">User ID Controlled by Request Parameter — Data Leakage in Redirect</div><div class="cd">302 redirect body still contains victim data before redirecting.</div><div class="tags"><span class="tp">idor</span><span class="tp">redirect-leak</span><span class="tp">302</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AC-07</div><div class="ct">User ID Controlled by Request Parameter with Password Disclosure</div><div class="cd">Profile page leaks password in response when ID parameter is tampered.</div><div class="tags"><span class="tp">idor</span><span class="tp">password-leak</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AC-08</div><div class="ct">User ID Controlled by Request Parameter, Unpredictable User IDs</div><div class="cd">GUID-based IDs leaked via public blog posts. Enumerate to find victim GUID.</div><div class="tags"><span class="tp">idor</span><span class="tp">guid</span><span class="tp">enumeration</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AC-09</div><div class="ct">Insecure Direct Object References (IDOR)</div><div class="cd">Sequential transcript filenames — decrement ID to fetch another user's chat log with credentials.</div><div class="tags"><span class="tp">idor</span><span class="tp">sequential-ids</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AC-10</div><div class="ct">Multi-Step Process with No Access Control on One Step</div><div class="cd">Two-step admin flow; only step 1 is protected. Send step 2 directly with low-priv session.</div><div class="tags"><span class="tp">multi-step</span><span class="tp">priv-esc</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AC-11</div><div class="ct">Referer-Based Access Control</div><div class="cd">Admin sub-pages validate Referer header instead of session roles — forge Referer: /admin.</div><div class="tags"><span class="tp">referer</span><span class="tp">header-forgery</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AC-12</div><div class="ct">User Role Controlled by Request Parameter</div><div class="cd">Role is set via a cookie or body parameter that can be freely modified by the user.</div><div class="tags"><span class="tp">role-tampering</span><span class="tp">cookie</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AC-13</div><div class="ct">User Role Can Be Modified in User Profile</div><div class="cd">JSON profile update endpoint accepts and stores arbitrary fields including roleid.</div><div class="tags"><span class="tp">mass-assignment</span><span class="tp">json</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+  </div>
+</div>
+
+<!-- AUTHENTICATION -->
+<div class="sec" id="auth">
+  <div class="sec-title"><span class="si">🔑</span><h2>Authentication Bypass</h2></div>
+  <div class="grid">
+    <div class="card"><div class="cn">// PS-AUTH-01</div><div class="ct">2FA Broken Logic</div><div class="cd">2FA verification step doesn't validate that the OTP belongs to the current session's user.</div><div class="tags"><span class="tp">2fa</span><span class="tp">logic-flaw</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AUTH-02</div><div class="ct">Broken Brute-Force Protection — Multiple Credentials Per Request</div><div class="cd">Login accepts JSON array of passwords — submit all candidates in a single request.</div><div class="tags"><span class="tp">brute-force</span><span class="tp">json-array</span></div><div class="cf"><span class="b be">Expert</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AUTH-03</div><div class="ct">Brute-Forcing a Stay-Logged-In Cookie</div><div class="cd">Persistent login cookie is predictable (base64 of username:md5). Crack offline then forge.</div><div class="tags"><span class="tp">cookie-cracking</span><span class="tp">md5</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AUTH-04</div><div class="ct">Offline Password Cracking</div><div class="cd">Steal cookie via XSS then crack the md5 hash inside to get plaintext password.</div><div class="tags"><span class="tp">xss</span><span class="tp">cookie-theft</span><span class="tp">hash-crack</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AUTH-05</div><div class="ct">Password Brute-Force via Password Change</div><div class="cd">Password change endpoint reveals valid/invalid current password — use to brute-force.</div><div class="tags"><span class="tp">brute-force</span><span class="tp">password-change</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AUTH-06</div><div class="ct">Password Reset Broken Logic</div><div class="cd">Reset token is not tied to the user — change username parameter after receiving token.</div><div class="tags"><span class="tp">password-reset</span><span class="tp">token-reuse</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-AUTH-07</div><div class="ct">Password Reset Poisoning via Middleware</div><div class="cd">Inject X-Forwarded-Host to redirect reset link to attacker-controlled server.</div><div class="tags"><span class="tp">host-header</span><span class="tp">reset-poisoning</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+  </div>
+</div>
+
+<!-- BUSINESS LOGIC -->
+<div class="sec" id="biz">
+  <div class="sec-title"><span class="si">🧠</span><h2>Business Logic Vulnerabilities</h2></div>
+  <div class="grid">
+    <div class="card"><div class="cn">// PS-BL-01</div><div class="ct">Excessive Trust in Client-Side Controls</div><div class="cd">Price set in hidden form field — tamper to purchase items for arbitrary amounts.</div><div class="tags"><span class="tp">client-side</span><span class="tp">price-tamper</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-BL-02</div><div class="ct">High-Level Logic Vulnerability</div><div class="cd">Negative quantity accepted in cart — reduce total price below zero.</div><div class="tags"><span class="tp">negative-qty</span><span class="tp">cart</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-BL-03</div><div class="ct">Inconsistent Security Controls</div><div class="cd">Admin access granted based on email domain — update email after registration.</div><div class="tags"><span class="tp">email-domain</span><span class="tp">privilege</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-BL-04</div><div class="ct">Low-Level Logic Flaw</div><div class="cd">Integer overflow in cart total — add enough items to wrap price past negative back to positive.</div><div class="tags"><span class="tp">integer-overflow</span><span class="tp">cart</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-BL-05</div><div class="ct">Inconsistent Handling of Exceptional Input</div><div class="cd">Overly long email truncated server-side — abuse truncation for domain match.</div><div class="tags"><span class="tp">truncation</span><span class="tp">email</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-BL-06</div><div class="ct">Weak Isolation on Dual-Use Endpoint</div><div class="cd">Password change endpoint doubles as admin action — omit current password to bypass check.</div><div class="tags"><span class="tp">dual-use</span><span class="tp">isolation</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-BL-07</div><div class="ct">Insufficient Workflow Validation</div><div class="cd">Skip payment step by directly accessing the order-confirmation endpoint.</div><div class="tags"><span class="tp">workflow</span><span class="tp">payment-bypass</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-BL-08</div><div class="ct">Authentication Bypass via Flawed State Machine</div><div class="cd">Drop the role-selection request post-login to default to admin role.</div><div class="tags"><span class="tp">state-machine</span><span class="tp">auth-bypass</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-BL-09</div><div class="ct">Infinite Money Logic Flaw</div><div class="cd">Gift card purchase + coupon chained via Burp Macro to profit infinitely.</div><div class="tags"><span class="tp">gift-card</span><span class="tp">burp-macro</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-BL-10</div><div class="ct">Authentication Bypass via Encryption Oracle</div><div class="cd">Use encrypt/decrypt oracle to forge admin cookie without knowing the encryption key.</div><div class="tags"><span class="tp">oracle</span><span class="tp">encryption</span></div><div class="cf"><span class="b be">Expert</span><span class="arr">→</span></div></div>
+  </div>
+</div>
+
+<!-- FILE UPLOAD -->
+<div class="sec" id="fu">
+  <div class="sec-title"><span class="si">📁</span><h2>File Upload Vulnerabilities</h2></div>
+  <div class="grid">
+    <div class="card"><div class="cn">// PS-FU-01</div><div class="ct">Remote Code Execution via Web Shell Upload</div><div class="cd">No validation — upload PHP web shell directly and execute commands.</div><div class="tags"><span class="tp">webshell</span><span class="tp">rce</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-FU-02</div><div class="ct">Web Shell Upload via Content-Type Restriction Bypass</div><div class="cd">Server only checks Content-Type header — change to image/jpeg while uploading PHP shell.</div><div class="tags"><span class="tp">content-type</span><span class="tp">bypass</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-FU-03</div><div class="ct">Web Shell Upload via Extension Blacklist Bypass</div><div class="cd">.php blacklisted but .php5 / .phtml accepted — or upload .htaccess to enable execution.</div><div class="tags"><span class="tp">blacklist</span><span class="tp">htaccess</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-FU-04</div><div class="ct">Web Shell Upload via Obfuscated File Extension</div><div class="cd">Use null bytes, mixed case, or double extensions to bypass extension whitelist.</div><div class="tags"><span class="tp">null-byte</span><span class="tp">obfuscation</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-FU-05</div><div class="ct">Web Shell Upload via Path Traversal</div><div class="cd">Filename sanitised but directory traversal in filename escapes the uploads folder.</div><div class="tags"><span class="tp">path-traversal</span><span class="tp">webshell</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-FU-06</div><div class="ct">RCE via Polyglot Web Shell Upload</div><div class="cd">Embed PHP payload inside valid image bytes to pass magic-byte and extension checks.</div><div class="tags"><span class="tp">polyglot</span><span class="tp">magic-bytes</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+  </div>
+</div>
+
+<!-- HTTP SMUGGLING -->
+<div class="sec" id="smug">
+  <div class="sec-title"><span class="si">🚦</span><h2>HTTP Request Smuggling</h2></div>
+  <div class="grid">
+    <div class="card"><div class="cn">// PS-RS-01</div><div class="ct">Basic CL.TE Vulnerability</div><div class="cd">Desync front-end (Content-Length) and back-end (Transfer-Encoding) to poison pipeline.</div><div class="tags"><span class="tp">CL.TE</span><span class="tp">desync</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-RS-02</div><div class="ct">Basic TE.CL Vulnerability</div><div class="cd">Reverse: front-end uses TE, back-end uses CL — craft chunked payload accordingly.</div><div class="tags"><span class="tp">TE.CL</span><span class="tp">chunked</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-RS-03</div><div class="ct">Obfuscating the TE Header</div><div class="cd">Use obfuscated Transfer-Encoding (spaces, tabs, invalid values) to confuse one hop.</div><div class="tags"><span class="tp">TE-obfuscation</span><span class="tp">headers</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-RS-04</div><div class="ct">Confirming CL.TE via Differential Responses</div><div class="cd">Use timing and error differences to confirm the smuggling vulnerability exists.</div><div class="tags"><span class="tp">differential</span><span class="tp">detection</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-RS-05</div><div class="ct">Confirming TE.CL via Differential Responses</div><div class="cd">Detect TE.CL desync by observing differential responses to timed requests.</div><div class="tags"><span class="tp">TE.CL</span><span class="tp">detection</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-RS-06</div><div class="ct">Bypass Front-End Security Controls, CL.TE</div><div class="cd">Smuggle a request that the front-end blocks but the back-end processes normally.</div><div class="tags"><span class="tp">CL.TE</span><span class="tp">bypass</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-RS-07</div><div class="ct">Bypass Front-End Security Controls, TE.CL</div><div class="cd">Exploit TE.CL desync to reach restricted back-end endpoints.</div><div class="tags"><span class="tp">TE.CL</span><span class="tp">bypass</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+  </div>
+</div>
+
+<!-- DESERIALIZATION -->
+<div class="sec" id="deser">
+  <div class="sec-title"><span class="si">📦</span><h2>Insecure Deserialization</h2></div>
+  <div class="grid">
+    <div class="card"><div class="cn">// PS-DS-01</div><div class="ct">Modifying Serialized Objects</div><div class="cd">Decode PHP serialized cookie, flip admin boolean to 1, re-encode and send.</div><div class="tags"><span class="tp">php</span><span class="tp">serialize</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-DS-02</div><div class="ct">Modifying Serialized Data Types</div><div class="cd">PHP loose comparison — set password type to integer 0 to bypass authentication.</div><div class="tags"><span class="tp">php</span><span class="tp">type-juggling</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-DS-03</div><div class="ct">Using Application Functionality to Exploit Deserialization</div><div class="cd">Delete-avatar feature traverses the avatar path — point to /home/carlos/.ssh/id_rsa.</div><div class="tags"><span class="tp">gadget</span><span class="tp">path-traversal</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-DS-04</div><div class="ct">Arbitrary Object Injection in PHP</div><div class="cd">Inject custom object; __destruct magic method triggers file deletion / RCE.</div><div class="tags"><span class="tp">php</span><span class="tp">object-injection</span><span class="tp">magic-method</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-DS-05</div><div class="ct">Exploiting Java Deserialization with Apache Commons</div><div class="cd">Use ysoserial CommonsCollections gadget chain to achieve RCE via Java deserialization.</div><div class="tags"><span class="tp">java</span><span class="tp">ysoserial</span><span class="tp">rce</span></div><div class="cf"><span class="b be">Expert</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-DS-06</div><div class="ct">Exploiting PHP Deserialization with Pre-Built Gadget Chain</div><div class="cd">Identify framework, find gadget chain with phpggc, generate payload for RCE.</div><div class="tags"><span class="tp">php</span><span class="tp">phpggc</span><span class="tp">rce</span></div><div class="cf"><span class="b be">Expert</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-DS-07</div><div class="ct">Exploiting Ruby Deserialization with Documented Gadget Chain</div><div class="cd">Adapt publicly documented Ruby gadget chain to achieve RCE via deserialization.</div><div class="tags"><span class="tp">ruby</span><span class="tp">gadget-chain</span></div><div class="cf"><span class="b be">Expert</span><span class="arr">→</span></div></div>
+  </div>
+</div>
+
+<!-- JWT -->
+<div class="sec" id="jwt">
+  <div class="sec-title"><span class="si">🪙</span><h2>JWT Attacks</h2></div>
+  <div class="grid">
+    <div class="card"><div class="cn">// PS-JWT-01</div><div class="ct">JWT Authentication Bypass via Unverified Signature</div><div class="cd">Server doesn't verify JWT signature — modify payload to claim admin role freely.</div><div class="tags"><span class="tp">jwt</span><span class="tp">no-verify</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-JWT-02</div><div class="ct">JWT Authentication Bypass via Flawed Signature Verification</div><div class="cd">Set algorithm to "none" — server accepts unsigned tokens.</div><div class="tags"><span class="tp">jwt</span><span class="tp">alg-none</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-JWT-03</div><div class="ct">JWT Authentication Bypass via Weak Signing Key</div><div class="cd">Brute-force weak HS256 secret with hashcat then forge admin token.</div><div class="tags"><span class="tp">hs256</span><span class="tp">hashcat</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-JWT-04</div><div class="ct">JWT Authentication Bypass via jwk Header Injection</div><div class="cd">Embed your own public key in the jwk header — server uses it to verify your forged token.</div><div class="tags"><span class="tp">jwk</span><span class="tp">key-confusion</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-JWT-05</div><div class="ct">JWT Authentication Bypass via jku Header Injection</div><div class="cd">Point jku to attacker-controlled JWKS endpoint hosting your own public key.</div><div class="tags"><span class="tp">jku</span><span class="tp">jwks</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-JWT-06</div><div class="ct">JWT Authentication Bypass via kid Header Path Traversal</div><div class="cd">Traverse kid parameter to /dev/null — sign token with empty string secret.</div><div class="tags"><span class="tp">kid</span><span class="tp">path-traversal</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+  </div>
+</div>
+
+<!-- NOSQL -->
+<div class="sec" id="nosql">
+  <div class="sec-title"><span class="si">🍃</span><h2>NoSQL Injection</h2></div>
+  <div class="grid">
+    <div class="card"><div class="cn">// PS-NS-01</div><div class="ct">Detecting NoSQL Injection</div><div class="cd">Inject MongoDB operators ($where, $regex) into query parameters to confirm injection.</div><div class="tags"><span class="tp">mongodb</span><span class="tp">detection</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-NS-02</div><div class="ct">Exploiting NoSQL Injection to Extract Data</div><div class="cd">Use $regex operator to extract data character by character from NoSQL database.</div><div class="tags"><span class="tp">exfil</span><span class="tp">regex</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-NS-03</div><div class="ct">Exploiting NoSQL Operator Injection to Bypass Authentication</div><div class="cd">Inject {"$ne": ""} into login JSON body to bypass password check entirely.</div><div class="tags"><span class="tp">operator-injection</span><span class="tp">auth-bypass</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-NS-04</div><div class="ct">Exploiting NoSQL Operator Injection to Extract Unknown Fields</div><div class="cd">Use $where and JS execution to enumerate unknown field names and values.</div><div class="tags"><span class="tp">$where</span><span class="tp">field-enum</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+  </div>
+</div>
+
+<!-- OAUTH -->
+<div class="sec" id="oauth">
+  <div class="sec-title"><span class="si">🔗</span><h2>OAuth Authentication</h2></div>
+  <div class="grid">
+    <div class="card"><div class="cn">// PS-OA-01</div><div class="ct">Authentication Bypass via OAuth Implicit Flow</div><div class="cd">Access token sent to client — change email in post-auth request to claim victim's account.</div><div class="tags"><span class="tp">implicit-flow</span><span class="tp">account-takeover</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-OA-02</div><div class="ct">Forced OAuth Profile Linking</div><div class="cd">No state parameter — CSRF the OAuth flow to link attacker account to victim's profile.</div><div class="tags"><span class="tp">csrf</span><span class="tp">state-param</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-OA-03</div><div class="ct">OAuth Account Hijacking via redirect_uri</div><div class="cd">Leak auth code to attacker server by manipulating redirect_uri parameter.</div><div class="tags"><span class="tp">redirect_uri</span><span class="tp">code-leak</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-OA-04</div><div class="ct">Stealing OAuth Access Tokens via Open Redirect</div><div class="cd">Chain open redirect with redirect_uri bypass to exfiltrate access tokens.</div><div class="tags"><span class="tp">open-redirect</span><span class="tp">token-theft</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+  </div>
+</div>
+
+<!-- OS CMD -->
+<div class="sec" id="cmd">
+  <div class="sec-title"><span class="si">💻</span><h2>OS Command Injection</h2></div>
+  <div class="grid">
+    <div class="card"><div class="cn">// PS-CI-01</div><div class="ct">OS Command Injection — Simple Case</div><div class="cd">Inject | whoami into product stock check parameter for immediate output.</div><div class="tags"><span class="tp">command-injection</span><span class="tp">rce</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-CI-02</div><div class="ct">Blind OS Command Injection with Time Delays</div><div class="cd">No output — use ping -c 10 to confirm injection via response delay.</div><div class="tags"><span class="tp">blind</span><span class="tp">time-delay</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-CI-03</div><div class="ct">Blind OS Command Injection with Output Redirection</div><div class="cd">Redirect command output to a web-accessible file then retrieve via browser.</div><div class="tags"><span class="tp">blind</span><span class="tp">output-redirect</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+  </div>
+</div>
+
+<!-- PATH TRAVERSAL -->
+<div class="sec" id="pt">
+  <div class="sec-title"><span class="si">📂</span><h2>Path Traversal</h2></div>
+  <div class="grid">
+    <div class="card"><div class="cn">// PS-PT-01</div><div class="ct">File Path Traversal — Simple Case</div><div class="cd">Replace filename with ../../../etc/passwd to read arbitrary files.</div><div class="tags"><span class="tp">traversal</span><span class="tp">lfi</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-PT-02</div><div class="ct">Traversal Sequences Blocked with Absolute Path Bypass</div><div class="cd">../ stripped — use absolute path /etc/passwd directly instead.</div><div class="tags"><span class="tp">absolute-path</span><span class="tp">bypass</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-PT-03</div><div class="ct">Traversal Sequences Stripped Non-Recursively</div><div class="cd">Use ....// so after stripping one ../ the sequence reconstructs itself.</div><div class="tags"><span class="tp">double-dot</span><span class="tp">bypass</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-PT-04</div><div class="ct">Traversal Sequences Stripped with Superfluous URL-Decode</div><div class="cd">Double URL-encode ../ as %252e%252e%252f to survive the sanitisation step.</div><div class="tags"><span class="tp">url-encoding</span><span class="tp">double-encode</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-PT-05</div><div class="ct">Validation of Start of Path</div><div class="cd">Path must start with /var/www/images — use /var/www/images/../../../etc/passwd.</div><div class="tags"><span class="tp">prefix-validation</span><span class="tp">bypass</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-PT-06</div><div class="ct">Validation of File Extension with Null Byte Bypass</div><div class="cd">Append %00.png — null byte terminates string before extension check.</div><div class="tags"><span class="tp">null-byte</span><span class="tp">extension-bypass</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+  </div>
+</div>
+
+<!-- SSRF -->
+<div class="sec" id="ssrf">
+  <div class="sec-title"><span class="si">🌐</span><h2>Server-Side Request Forgery (SSRF)</h2></div>
+  <div class="grid">
+    <div class="card"><div class="cn">// PS-SF-01</div><div class="ct">Basic SSRF Against the Local Server</div><div class="cd">Change stock-check URL to http://localhost/admin to reach internal admin panel.</div><div class="tags"><span class="tp">ssrf</span><span class="tp">localhost</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SF-02</div><div class="ct">Basic SSRF Against Another Back-End System</div><div class="cd">Scan internal 192.168.0.x subnet via SSRF to find and access internal admin service.</div><div class="tags"><span class="tp">ssrf</span><span class="tp">internal-scan</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SF-03</div><div class="ct">SSRF with Blacklist-Based Input Filter</div><div class="cd">127.0.0.1 and localhost blocked — use 127.1, decimal IP, or octal encoding.</div><div class="tags"><span class="tp">blacklist-bypass</span><span class="tp">ip-encoding</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SF-04</div><div class="ct">SSRF with Whitelist-Based Input Filter</div><div class="cd">Use @ or # in URL to embed allowed hostname while redirecting to internal target.</div><div class="tags"><span class="tp">whitelist-bypass</span><span class="tp">url-parsing</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SF-05</div><div class="ct">SSRF with Filter Bypass via Open Redirection</div><div class="cd">Filter allows certain paths — exploit open redirect on that path to bounce SSRF internally.</div><div class="tags"><span class="tp">open-redirect</span><span class="tp">chain</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+  </div>
+</div>
+
+<!-- SSTI -->
+<div class="sec" id="ssti">
+  <div class="sec-title"><span class="si">🧩</span><h2>Server-Side Template Injection (SSTI)</h2></div>
+  <div class="grid">
+    <div class="card"><div class="cn">// PS-SSTI-01</div><div class="ct">Basic Server-Side Template Injection</div><div class="cd">Inject {{7*7}} style payloads into ERB/Jinja templates to confirm and exploit RCE.</div><div class="tags"><span class="tp">ssti</span><span class="tp">rce</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SSTI-02</div><div class="ct">Basic Server-Side Template Injection (Code Context)</div><div class="cd">Template expression inside code block — escape the block then inject payload.</div><div class="tags"><span class="tp">ssti</span><span class="tp">code-context</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SSTI-03</div><div class="ct">SSTI in Unknown Language with Documented Exploit</div><div class="cd">Identify template engine from error messages then use documented exploit chain.</div><div class="tags"><span class="tp">fingerprint</span><span class="tp">rce</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SSTI-04</div><div class="ct">SSTI Using Documentation</div><div class="cd">Read engine docs to craft RCE payload — e.g. Freemarker's freemarker.template.utility.Execute.</div><div class="tags"><span class="tp">freemarker</span><span class="tp">rce</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SSTI-05</div><div class="ct">SSTI with Information Disclosure via User-Supplied Objects</div><div class="cd">Dump template engine internals to discover secret key via debug object access.</div><div class="tags"><span class="tp">info-disclosure</span><span class="tp">debug</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+  </div>
+</div>
+
+<!-- SQL INJECTION -->
+<div class="sec" id="sqli">
+  <div class="sec-title"><span class="si">💉</span><h2>SQL Injection</h2></div>
+  <div class="grid">
+    <div class="card"><div class="cn">// PS-SQL-01</div><div class="ct">SQL Injection Vulnerability Allowing Login Bypass</div><div class="cd">Classic admin'-- in username field to bypass password check entirely.</div><div class="tags"><span class="tp">sqli</span><span class="tp">login-bypass</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SQL-02</div><div class="ct">SQL Injection UNION Attack — Determining Number of Columns</div><div class="cd">Use ORDER BY or UNION NULL payloads to determine column count.</div><div class="tags"><span class="tp">union</span><span class="tp">column-count</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SQL-03</div><div class="ct">SQL Injection UNION Attack — Finding a Column Containing Text</div><div class="cd">Replace NULLs with strings one by one to find which column reflects text.</div><div class="tags"><span class="tp">union</span><span class="tp">string-column</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SQL-04</div><div class="ct">SQL Injection UNION Attack — Retrieving Data from Other Tables</div><div class="cd">UNION SELECT username,password FROM users-- to dump credentials directly.</div><div class="tags"><span class="tp">union</span><span class="tp">data-exfil</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SQL-05</div><div class="ct">SQL Injection UNION Attack — Multiple Values in Single Column</div><div class="cd">Concatenate multiple columns into one with || or CONCAT for single-column output.</div><div class="tags"><span class="tp">union</span><span class="tp">concat</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SQL-06</div><div class="ct">SQL Injection — Querying DB Version on Oracle</div><div class="cd">SELECT banner FROM v$version -- on Oracle to retrieve version info.</div><div class="tags"><span class="tp">oracle</span><span class="tp">version</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SQL-07</div><div class="ct">SQL Injection — Querying DB Version on MySQL and Microsoft</div><div class="cd">SELECT @@version for MySQL/MSSQL database version fingerprinting.</div><div class="tags"><span class="tp">mysql</span><span class="tp">mssql</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SQL-08</div><div class="ct">SQL Injection — Listing DB Contents on Non-Oracle Databases</div><div class="cd">Query information_schema.tables and columns to map the full database schema.</div><div class="tags"><span class="tp">information_schema</span><span class="tp">schema-enum</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SQL-09</div><div class="ct">SQL Injection — Listing DB Contents on Oracle</div><div class="cd">Use all_tables and all_columns on Oracle to enumerate schema and extract data.</div><div class="tags"><span class="tp">oracle</span><span class="tp">all_tables</span></div><div class="cf"><span class="b ba">Apprentice</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SQL-10</div><div class="ct">Blind SQL Injection with Conditional Responses</div><div class="cd">Observe "Welcome back" message to infer true/false and extract data bit by bit.</div><div class="tags"><span class="tp">blind</span><span class="tp">boolean-based</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SQL-11</div><div class="ct">Blind SQL Injection with Conditional Errors</div><div class="cd">Trigger DB error vs. no error to infer true/false condition without visible output.</div><div class="tags"><span class="tp">blind</span><span class="tp">error-based</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SQL-12</div><div class="ct">Visible Error-Based SQL Injection</div><div class="cd">Cast errors leak data in verbose DB error messages — CAST((SELECT ...) AS int).</div><div class="tags"><span class="tp">error-based</span><span class="tp">cast</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SQL-13</div><div class="ct">Blind SQL Injection with Time Delays</div><div class="cd">Use pg_sleep(10) / SLEEP(10) / WAITFOR DELAY to confirm blind SQLi via response time.</div><div class="tags"><span class="tp">blind</span><span class="tp">time-based</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+    <div class="card"><div class="cn">// PS-SQL-14</div><div class="ct">SQL Injection with Filter Bypass via XML Encoding</div><div class="cd">WAF blocks SQL keywords in JSON — encode payload in XML entity encoding to bypass.</div><div class="tags"><span class="tp">waf-bypass</span><span class="tp">xml</span><span class="tp">encoding</span></div><div class="cf"><span class="b bp">Practitioner</span><span class="arr">→</span></div></div>
+  </div>
+</div>
+
+<!-- HTB MACHINES -->
+<div class="sec" id="htb">
+  <div class="sec-title"><span class="si">🤖</span><h2 id="hackthebox">HackTheBox — Machines</h2></div>
+  <div class="mlist">
+    <div class="mi"><div class="mos">🐧</div><div><div class="mn">Cap</div><div style="font-size:10px;color:var(--dim)">Linux · Easy</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🐧</div><div><div class="mn">Crocodile</div><div style="font-size:10px;color:var(--dim)">Linux · Easy</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🐧</div><div><div class="mn">CodePartTwo</div><div style="font-size:10px;color:var(--dim)">Linux · Easy</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🐧</div><div><div class="mn">Editor</div><div style="font-size:10px;color:var(--dim)">Linux</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🐧</div><div><div class="mn">Expressway</div><div style="font-size:10px;color:var(--dim)">Linux</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🐧</div><div><div class="mn">HackNet</div><div style="font-size:10px;color:var(--dim)">Linux</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🐧</div><div><div class="mn">Oopsie</div><div style="font-size:10px;color:var(--dim)">Linux · Easy</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🐧</div><div><div class="mn">Previous</div><div style="font-size:10px;color:var(--dim)">Linux</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🐧</div><div><div class="mn">Sequel</div><div style="font-size:10px;color:var(--dim)">Linux · Easy</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🐧</div><div><div class="mn">Strutted</div><div style="font-size:10px;color:var(--dim)">Linux</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🐧</div><div><div class="mn">Three</div><div style="font-size:10px;color:var(--dim)">Linux · Easy</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🐧</div><div><div class="mn">TwoMillion</div><div style="font-size:10px;color:var(--dim)">Linux · Easy</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🐧</div><div><div class="mn">Unified</div><div style="font-size:10px;color:var(--dim)">Linux · Easy</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🐧</div><div><div class="mn">Vaccine</div><div style="font-size:10px;color:var(--dim)">Linux · Easy</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🐧</div><div><div class="mn">WhiteRabbit</div><div style="font-size:10px;color:var(--dim)">Linux</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🪟</div><div><div class="mn">Archetype</div><div style="font-size:10px;color:var(--dim)">Windows · Easy</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🪟</div><div><div class="mn">Signed</div><div style="font-size:10px;color:var(--dim)">Windows · Medium</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+    <div class="mi"><div class="mos">🪟</div><div><div class="mn">Responder</div><div style="font-size:10px;color:var(--dim)">Windows · Easy</div></div><div class="mm"><span class="b bh">HTB</span></div></div>
+  </div>
+</div>
+
+<!-- HTB CHALLENGES -->
+<div class="sec" id="htbc">
+  <div class="sec-title"><span class="si">🏆</span><h2>HackTheBox — Challenges</h2></div>
+  <div class="grid">
+    <div class="card"><div class="cn">// HTB-CH-01</div><div class="ct">Spookifier</div><div class="cd">Web challenge with SSTI in a Halloween-themed text transformer application.</div><div class="tags"><span class="tp">ssti</span><span class="tp">web</span></div><div class="cf"><span class="b bh">HTB</span><span class="arr">→</span></div></div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<footer class="footer" id="about">
+  <span>Maintained by <strong style="color:var(--green)">Pasindu</strong> — documenting the path of a hacker, one writeup at a time.</span>
+  <div class="fl"><a href="#">GitHub</a><a href="#">LinkedIn</a></div>
+</footer>
+
+<script>
+const ham=document.getElementById('ham'),sb=document.getElementById('sb'),ov=document.getElementById('ov');
+function open_(){sb.classList.add('open');ov.classList.add('show')}
+function close_(){sb.classList.remove('open');ov.classList.remove('show')}
+ham.addEventListener('click',()=>sb.classList.contains('open')?close_():open_());
+ov.addEventListener('click',close_);
+function go(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});close_()}
+
+// Active sidebar on scroll
+const secs=document.querySelectorAll('.sec');
+const links=document.querySelectorAll('.sb-a');
+const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.classList.remove('act'));
+      const id=e.target.id;
+      const m=[...links].find(l=>(l.getAttribute('onclick')||'').includes(`'${id}'`));
+      if(m)m.classList.add('act');
+    }
+  });
+},{threshold:0.15});
+secs.forEach(s=>obs.observe(s));
+
+// SEARCH FILTER
+const searchInput = document.getElementById('search');
+searchInput.addEventListener('keyup', function() {
+  const value = this.value.toLowerCase();
+  const cards = document.querySelectorAll('.card');
+
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+    card.style.display = text.includes(value) ? 'flex' : 'none';
+  });
+});
+</script>
+</body>
+</html>
