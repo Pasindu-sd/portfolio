@@ -117,8 +117,10 @@
         .hero-img-container img {
             width: 100%;
             display: block;
-            filter: grayscale(1) brightness(0.8) contrast(1.2);
             transition: all 0.3s ease;
+        }
+        .hero-img-container:hover img {
+            filter: grayscale(0) brightness(1);
         }
         .hero-img-container::after {
             content: '';
