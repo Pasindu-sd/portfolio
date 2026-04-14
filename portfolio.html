@@ -130,6 +130,24 @@
             opacity: 0.3;
             pointer-events: none;
         }
+        .image-container { position: relative; width: 350px; height: 400px; flex-shrink: 0; }
+        .morph-photo {
+            width: 100%;
+            height: 110%;
+            background-image: url('pic4.jpg'); /* Using your uploaded photo */
+            background-size: cover;
+            background-position: center;
+            border: 3px solid var(--primary);
+            animation: morphing 8s ease-in-out infinite;
+            transition: all 1s ease-in-out;
+            box-shadow: 0 0 30px rgba(23, 112, 181, 0.3);
+        }
+
+        @keyframes morphing {
+            0% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40%/50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
+        }
     </style>
 </head>
 <body>
@@ -157,9 +175,9 @@
                     <a href="https://github.com/Pasindu-sd" class="btn" style="border: 1px solid var(--border); color: white;">View GitHub</a>
                 </div>
             </div>
-            <div class="hero-img-container">
-                <img src="pic4.jpg" alt="Pasindu Sandeepa">
-                <div class="stat-card-label" style="margin-top: 10px; text-align: center;">ID: PASINDU_SANDEEPA</div>
+            <div class="image-container">
+                <div class="morph-photo">
+                </div>
             </div>
         </section>
 
@@ -231,6 +249,31 @@
             </div>
         </footer>
     </div>
+<script>
+    const target = document.getElementById('type-target');
+    const texts = ["Breaking boundaries.", "Finding vulnerabilities.", "Building tools.", "Writing reports."];
+    let index = 0; let charIndex = 0; let isDeleting = false;
 
+    function type() {
+        const currentText = texts[index];
+        if (isDeleting) {
+            target.textContent = currentText.substring(0, charIndex--);
+        } else {
+            target.textContent = currentText.substring(0, charIndex++);
+        }
+
+        if (!isDeleting && charIndex === currentText.length + 1) {
+            isDeleting = true;
+            setTimeout(type, 2000);
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            index = (index + 1) % texts.length;
+            setTimeout(type, 500);
+        } else {
+            setTimeout(type, isDeleting ? 50 : 100);
+        }
+    }
+    type();
+</script>
 </body>
 </html>
