@@ -203,8 +203,8 @@
             </div>
             <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.9; margin-bottom: 1.4rem;">
                 I like to keep myself relevant by solving Capture The Flags on HackTheBox and working through PortSwigger 
-                Web Security Academy labs — publishing 120+ detailed writeups along the way. I also build open-source security 
-                tools like <strong style="color: var(--text);">PhishGuard</strong> and a <strong style="color: var(--text);">Log Analyzer & Threat Detector</strong> 
+                Web Security Academy labs — publishing 250+ detailed writeups along the way. I also build open-source security 
+                tools like an <strong style="color: var(--text);">XSS Scanner</strong> and an <strong style="color: var(--text);">HTTP Request Smuggling Detector</strong> 
                 to sharpen my practical skills.
             </p>
             <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.9;">
@@ -224,8 +224,8 @@
                     <h3 style="margin-bottom: 0.5rem;">Stats</h3>
                     <div style="font-family: 'JetBrains Mono'; font-size: 0.9rem;">
                         <p style="color: white; margin-bottom: 0.5rem;">+ Top 20% TryHackMe</p>
-                        <p style="color: white; margin-bottom: 0.5rem;">+ 121 Security Writeups</p>
-                        <p style="color: white; margin-bottom: 0.5rem;">+ 15+ Custom Python Tools</p>
+                        <p style="color: white; margin-bottom: 0.5rem;">+ 250+ Security Writeups</p>
+                        <p style="color: white; margin-bottom: 0.5rem;">+ 8+ Custom Python Tools</p>
                         <br>
                         <a href="https://pasindu-sd.github.io/writeups-blog/" target="_blank" style="color: white; font-family: 'JetBrains Mono'; font-size: 0.85rem; text-decoration: underline;">→ Read all writeups</a>
                     </div>
@@ -240,23 +240,23 @@
             <div class="grid">
                 <div class="card">
                     <span class="hero-tag" style="margin-bottom: 0.5rem;">Offensive Security</span>
-                    <h3>Multi-Threaded NoSQL Automator</h3>
-                    <p>Custom Python development to streamline vulnerability identification.</p>
+                    <h3>Context-Aware XSS Scanner</h3>
+                    <p>Custom Python tool for automated, low-false-positive XSS detection.</p>
                     <ul class="case-list">
-                        <li><b>Problem:</b> Manual NoSQL injection was too slow for large datasets.</li>
-                        <li><b>Action:</b> Built a threading script to automate payload delivery via Python.</li>
-                        <li><b>Outcome:</b> Reduced audit time by 70%; successfully identified data leakage.</li>
+                        <li><b>Problem:</b> Generic XSS scanners flag reflections that never actually execute.</li>
+                        <li><b>Action:</b> Built a scanner using raw TCP/SSL sockets with separate payload logic for HTML, attribute, JS, DOM, and AngularJS contexts, verified via Playwright.</li>
+                        <li><b>Outcome:</b> Confirms exploitability in a real browser before reporting — cutting false positives significantly.</li>
                     </ul>
                 </div>
 
                 <div class="card">
-                    <span class="hero-tag" style="margin-bottom: 0.5rem;">Network Defense</span>
-                    <h3>AD Domain Takeover & Audit</h3>
-                    <p>Identifying misconfigurations in Windows Domain environments.</p>
+                    <span class="hero-tag" style="margin-bottom: 0.5rem;">Protocol-Level Testing</span>
+                    <h3>HTTP Request Smuggling Detector</h3>
+                    <p>Identifying CL.TE / TE.CL desync vulnerabilities at the raw request level.</p>
                     <ul class="case-list">
-                        <li><b>Problem:</b> Insecure GPO allowed for easy lateral movement.</li>
-                        <li><b>Action:</b> Used BloodHound and Kerberoasting to escalate privileges.</li>
-                        <li><b>Outcome:</b> Secured the environment by implementing least-privilege policies.</li>
+                        <li><b>Problem:</b> Standard HTTP libraries auto-normalize malformed headers, making desync attacks impossible to craft.</li>
+                        <li><b>Action:</b> Built a raw-socket tool to send deliberately malformed CL.TE, TE.CL, TE.TE, and CL.0 requests.</li>
+                        <li><b>Outcome:</b> Detects front-end/back-end parsing disagreements that standard scanners miss entirely.</li>
                     </ul>
                 </div>
             </div>
@@ -266,12 +266,12 @@
             <div class="section-title">Specialties</div>
             <div class="grid">
                 <div class="item">
-                    <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Red Teaming</h3>
-                    <p>Web App Pentesting, SQL/NoSQL Injection, Nmap Scripting (NSE), Burp Suite.</p>
+                    <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Web App Pentesting</h3>
+                    <p>SQL/NoSQL Injection, XSS, CSRF, IDOR, HTTP Request Smuggling, Nmap Scripting (NSE), Burp Suite.</p>
                 </div>
                 <div class="item">
-                    <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Blue Teaming</h3>
-                    <p>Traffic Analysis (Wireshark), MITM Detection, Incident Reporting, SOC Analytics.</p>
+                    <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Network &amp; Recon</h3>
+                    <p>Traffic Analysis (Wireshark), Nuclei, Service Enumeration, Vulnerability Reporting.</p>
                 </div>
             </div>
         </section>
@@ -285,31 +285,5 @@
             </div>
         </footer>
     </div>
-<script>
-    const target = document.getElementById('type-target');
-    const texts = ["Breaking boundaries.", "Finding vulnerabilities.", "Building tools.", "Writing reports."];
-    let index = 0; let charIndex = 0; let isDeleting = false;
-
-    function type() {
-        const currentText = texts[index];
-        if (isDeleting) {
-            target.textContent = currentText.substring(0, charIndex--);
-        } else {
-            target.textContent = currentText.substring(0, charIndex++);
-        }
-
-        if (!isDeleting && charIndex === currentText.length + 1) {
-            isDeleting = true;
-            setTimeout(type, 2000);
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            index = (index + 1) % texts.length;
-            setTimeout(type, 500);
-        } else {
-            setTimeout(type, isDeleting ? 50 : 100);
-        }
-    }
-    type();
-</script>
 </body>
 </html>
