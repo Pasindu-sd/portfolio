@@ -68,8 +68,12 @@
             font-weight: 600;
             display: inline-block;
             transition: 0.3s;
+            cursor: pointer;
+            border: 1px solid transparent;
+            font-family: inherit;
+            font-size: 1rem;
         }
-        .btn-primary { background: var(--primary); color: white; border: 1px solid var(--primary); }
+        .btn-primary { background: var(--primary); color: white; border-color: var(--primary); }
         .btn-primary:hover { background: transparent; color: var(--primary); }
 
         /* SECTION STYLING */
@@ -97,6 +101,25 @@
         .case-list li { margin-bottom: 0.8rem; font-size: 0.9rem; color: var(--text-muted); display: flex; gap: 0.5rem; }
         .case-list li b { color: var(--text); min-width: 80px; font-family: 'JetBrains Mono'; }
 
+        /* CONTACT FORM STYLES */
+        .contact-container { display: flex; gap: 4rem; flex-wrap: wrap; }
+        .contact-info { flex: 1; min-width: 300px; }
+        .contact-form { flex: 1.5; min-width: 300px; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted); font-weight: 600; }
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            transition: 0.3s;
+        }
+        .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(23, 112, 181, 0.2); }
+        textarea.form-control { resize: vertical; min-height: 150px; }
+
         /* FOOTER */
         footer { padding: 4rem 0; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 0.8rem; }
 
@@ -104,7 +127,10 @@
             .hero { flex-direction: column; text-align: center; padding: 60px 0; }
             .hero h1 { font-size: 2.5rem; }
             nav { display: none; }
+            .about-layout { flex-direction: column; align-items: center; text-align: center; }
+            .about-layout div { width: 100% !important; }
         }
+        
         .hero-img-container {
             position: relative;
             width: 100%;
@@ -134,7 +160,7 @@
         .morph-photo {
             width: 100%;
             height: 110%;
-            background-image: url('pic4.jpg'); /* Using your uploaded photo */
+            background-image: url('pic4.jpg'); 
             background-size: cover;
             background-position: center;
             border: 3px solid var(--primary);
@@ -159,8 +185,8 @@
                 <a href="#about">About</a>
                 <a href="#projects">Portfolio</a>
                 <a href="#skills">Skills</a>
+                <a href="#contact">Contact</a>
                 <a href="https://pasindu-sd.github.io/writeups-blog/" target="_blank">Blog</a>
-                <a href="mailto:dilharawijesinghe86@gmail.com">Contact</a>
             </nav>
         </div>
     </header>
@@ -172,14 +198,13 @@
                 <h1>Protecting the digital world, one lab at a time.</h1>
                 <p>Pasindu Sandeepa. Junior Researcher specializing in Penetration Testing and Network Defense. Based in Sri Lanka.</p>
                 <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <a href="mailto:dilharawijesinghe86@gmail.com" class="btn btn-primary">Hire Me</a>
+                    <a href="#contact" class="btn btn-primary">Hire Me</a>
                     <a href="https://github.com/Pasindu-sd" target="_blank" class="btn" style="border: 1px solid var(--border); color: white;">View GitHub</a>
                     <a href="https://pasindu-sd.github.io/writeups-blog/" target="_blank" class="btn" style="border: 1px solid var(--border); color: var(--primary);">📝 Writeups Blog</a>
                 </div>
             </div>
             <div class="image-container">
-                <div class="morph-photo">
-                </div>
+                <div class="morph-photo"></div>
             </div>
         </section>
 
@@ -201,7 +226,7 @@
                     </p>
                 </div>
             </div>
-            <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.9; margin-bottom: 1.4rem;">
+            <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.9; margin-bottom: 1.4rem; margin-top: 1.5rem;">
                 I like to keep myself relevant by solving Capture The Flags on HackTheBox and working through PortSwigger 
                 Web Security Academy labs - publishing 250+ detailed writeups along the way. I also build open-source security 
                 tools like an <strong style="color: var(--text);">XSS Scanner</strong> and an <strong style="color: var(--text);">HTTP Request Smuggling Detector</strong> 
@@ -290,6 +315,45 @@
                 <div class="item">
                     <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Systems & Platforms</h3>
                     <p>Kali Linux, Ubuntu, HackTheBox, TryHackMe, PortSwigger, Bugcrowd, HackerOne.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW CONTACT SECTION -->
+        <section id="contact">
+            <div class="section-title">Contact</div>
+            <h2 class="section-h2">Get In Touch</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.8; margin-bottom: 2rem;">
+                        I am currently open to new opportunities, particularly in penetration testing, vulnerability research, and security engineering roles. Whether you have a question about my writeups or want to discuss a potential project, feel free to reach out!
+                    </p>
+                    <div style="margin-bottom: 1.5rem;">
+                        <strong style="color: var(--text); font-family: 'JetBrains Mono', monospace;">Email Address</strong><br>
+                        <a href="mailto:dilharawijesinghe86@gmail.com" style="color: var(--primary); text-decoration: none; font-size: 1.1rem;">dilharawijesinghe86@gmail.com</a>
+                    </div>
+                    <div>
+                        <strong style="color: var(--text); font-family: 'JetBrains Mono', monospace;">Location</strong><br>
+                        <span style="color: var(--text-muted); font-size: 1.1rem;">Sri Lanka</span>
+                    </div>
+                </div>
+                
+                <div class="contact-form card">
+                    <form action="mailto:dilharawijesinghe86@gmail.com" method="POST" enctype="text/plain">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" class="form-control" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" class="form-control" placeholder="How can we work together?" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    </form>
                 </div>
             </div>
         </section>
