@@ -169,6 +169,48 @@
             box-shadow: 0 0 30px rgba(23, 112, 181, 0.3);
         }
 
+        /* ENHANCED HERO BUTTONS */
+        .btn-hire {
+            background: var(--primary);
+            color: white;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 15px rgba(23, 112, 181, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+        .btn-hire:hover {
+            background: transparent;
+            color: var(--primary);
+            box-shadow: 0 0 25px rgba(23, 112, 181, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-blog {
+            background: rgba(23, 112, 181, 0.05);
+            color: var(--text);
+            border: 1px solid var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+        .btn-blog:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(23, 112, 181, 0.3);
+        }
+        
+        .btn-github {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+        .btn-github:hover {
+            border-color: var(--text);
+            color: var(--text);
+            transform: translateY(-2px);
+        }
+
         @keyframes morphing {
             0% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
             50% { border-radius: 30% 60% 70% 40%/50% 60% 30% 60%; }
@@ -186,7 +228,7 @@
                 <a href="#projects">Portfolio</a>
                 <a href="#skills">Skills</a>
                 <a href="#contact">Contact</a>
-                <a href="https://pasindu-sd.github.io/writeups-blog/" target="_blank">Blog</a>
+                <a href="https://pasindu-sd.github.io/writeups-blog/" target="_blank" class="btn btn-blog">Blog</a>
             </nav>
         </div>
     </header>
@@ -198,9 +240,9 @@
                 <h1>Protecting the digital world, one lab at a time.</h1>
                 <p>Pasindu Sandeepa. Junior Researcher specializing in Penetration Testing and Network Defense. Based in Sri Lanka.</p>
                 <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <a href="#contact" class="btn btn-primary">Hire Me</a>
-                    <a href="https://github.com/Pasindu-sd" target="_blank" class="btn" style="border: 1px solid var(--border); color: white;">View GitHub</a>
-                    <a href="https://pasindu-sd.github.io/writeups-blog/" target="_blank" class="btn" style="border: 1px solid var(--border); color: var(--primary);">📝 Writeups Blog</a>
+                    <a href="#contact" class="btn btn-hire">Hire Me</a>
+                    <a href="https://github.com/Pasindu-sd" target="_blank" class="btn btn-github">View GitHub</a>
+                    <a href="https://pasindu-sd.github.io/writeups-blog/" target="_blank" class="btn btn-blog">Writeups Blog</a>
                 </div>
             </div>
             <div class="image-container">
@@ -330,11 +372,11 @@
                     </p>
                     <div style="margin-bottom: 1.5rem;">
                         <strong style="color: var(--text); font-family: 'JetBrains Mono', monospace;">Email Address</strong><br>
-                        <a href="mailto:dilharawijesinghe86@gmail.com" style="color: var(--primary); text-decoration: none; font-size: 1.1rem;">dilharawijesinghe86@gmail.com</a>
+                        <a href="mailto:dilharawijesinghe86@gmail.com" style="color: var(--primary); text-decoration: none; font-size: 1.0rem;">dilharawijesinghe86@gmail.com</a>
                     </div>
                     <div>
                         <strong style="color: var(--text); font-family: 'JetBrains Mono', monospace;">Location</strong><br>
-                        <span style="color: var(--text-muted); font-size: 1.1rem;">Sri Lanka</span>
+                        <span style="color: var(--text-muted); font-size: 0.9rem;">Sri Lanka</span>
                     </div>
                 </div>
                 
@@ -359,7 +401,7 @@
         </section>
 
         <footer>
-            <div>PASINDU SANDEEPA — © 2026</div>
+            <div>PASINDU SANDEEPA © 2026</div>
             <div>
                 <a href="https://github.com/Pasindu-sd" style="color: var(--primary); text-decoration: none;">GitHub</a> / 
                 <a href="https://www.linkedin.com/in/pasindu-sandeepa-cybersecurity/" style="color: var(--primary); text-decoration: none; margin-left: 10px;">LinkedIn</a> /
